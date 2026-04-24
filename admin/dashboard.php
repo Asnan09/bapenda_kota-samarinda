@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // admin/dashboard.php
 session_start();
 if (!isset($_SESSION['admin_id'])) {
@@ -14,31 +14,50 @@ $kata_kunci = trim($_GET['q'] ?? "");
 $admin_username = $_SESSION['admin_username'] ?? "admin";
 $admin_initial = strtoupper(substr($admin_username, 0, 1));
 
+// Ambil filter bulan & tahun
+$filter_bulan = isset($_GET['bulan']) ? (int)$_GET['bulan'] : (int)date('m');
+$filter_tahun = isset($_GET['tahun']) ? (int)$_GET['tahun'] : (int)date('Y');
+
+// Base query parts
+$where_chart = "WHERE MONTH(tanggal) = $filter_bulan AND YEAR(tanggal) = $filter_tahun";
+
+// Query ringkasan atas (semua data atau bisa difilter juga, di sini kita biarkan total keseluruhan agar konsisten)
 $total_pengajuan = (int) mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) AS total FROM pengajuan"))['total'];
 $total_pending   = (int) mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) AS total FROM pengajuan WHERE status = 'pending'"))['total'];
+$total_diproses  = (int) mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) AS total FROM pengajuan WHERE status = 'diproses'"))['total'];
 $total_selesai   = (int) mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) AS total FROM pengajuan WHERE status = 'selesai'"))['total'];
 
-if ($kata_kunci !== "") {
-    $pencarian = "%" . $kata_kunci . "%";
-    $query_total_filter = "SELECT COUNT(*) AS total FROM pengajuan WHERE id LIKE ? OR nama LIKE ? OR nik LIKE ? OR jenis_surat LIKE ?";
-    $stmt_total = mysqli_prepare($koneksi, $query_total_filter);
-    mysqli_stmt_bind_param($stmt_total, "ssss", $pencarian, $pencarian, $pencarian, $pencarian);
-    mysqli_stmt_execute($stmt_total);
-    $total_data_tampil = (int) mysqli_fetch_assoc(mysqli_stmt_get_result($stmt_total))['total'];
+// Data for Doughnut Chart (Filtered)
+$chart_status = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT 
+    SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) as pending,
+    SUM(CASE WHEN status = 'diproses' THEN 1 ELSE 0 END) as diproses,
+    SUM(CASE WHEN status = 'selesai' THEN 1 ELSE 0 END) as selesai
+    FROM pengajuan $where_chart"));
 
-    $query = "SELECT id, nama, nik, jenis_surat, status, tanggal FROM pengajuan WHERE id LIKE ? OR nama LIKE ? OR nik LIKE ? OR jenis_surat LIKE ? ORDER BY tanggal DESC LIMIT ? OFFSET ?";
-    $stmt  = mysqli_prepare($koneksi, $query);
-    mysqli_stmt_bind_param($stmt, "ssssii", $pencarian, $pencarian, $pencarian, $pencarian, $per_page, $offset);
-} else {
-    $total_data_tampil = $total_pengajuan;
-    $query = "SELECT id, nama, nik, jenis_surat, status, tanggal FROM pengajuan ORDER BY tanggal DESC LIMIT ? OFFSET ?";
-    $stmt  = mysqli_prepare($koneksi, $query);
-    mysqli_stmt_bind_param($stmt, "ii", $per_page, $offset);
+// Data for Line Chart (Dates of the selected month)
+$chart_dates = [];
+$chart_counts = [];
+$days_in_month = cal_days_in_month(CAL_GREGORIAN, $filter_bulan, $filter_tahun);
+for ($i = 1; $i <= $days_in_month; $i++) {
+    $date = sprintf("%04d-%02d-%02d", $filter_tahun, $filter_bulan, $i);
+    $chart_dates[] = $i . " " . date('M', mktime(0, 0, 0, $filter_bulan, 10)); // e.g. 1 Sep
+    $query = "SELECT COUNT(*) AS total FROM pengajuan WHERE DATE(tanggal) = '$date'";
+    $chart_counts[] = (int) mysqli_fetch_assoc(mysqli_query($koneksi, $query))['total'];
 }
 
-$total_pages = max(1, (int) ceil($total_data_tampil / $per_page));
-mysqli_stmt_execute($stmt);
-$hasil = mysqli_stmt_get_result($stmt);
+// Data for Bar Chart (Jenis Surat - Filtered)
+$chart_jenis_labels = [];
+$chart_jenis_data = [];
+$q_jenis = mysqli_query($koneksi, "SELECT jenis_surat, COUNT(*) as total FROM pengajuan $where_chart GROUP BY jenis_surat");
+while($r = mysqli_fetch_assoc($q_jenis)) {
+    $chart_jenis_labels[] = $r['jenis_surat'];
+    $chart_jenis_data[] = (int) $r['total'];
+}
+
+$bulan_array = [
+    1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei', 6 => 'Juni',
+    7 => 'Juli', 8 => 'Agustus', 9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember'
+];
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -46,7 +65,7 @@ $hasil = mysqli_stmt_get_result($stmt);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Admin — Bapenda Samarinda</title>
-    <link rel="stylesheet" href="../assets/css/admin.css">
+    <link rel="stylesheet" href="../assets/css/admin.css?v=4">
 </head>
 <body class="dashboard-page">
 
@@ -76,11 +95,17 @@ $hasil = mysqli_stmt_get_result($stmt);
                 </span>
                 Dashboard
             </a>
-            <a href="dashboard.php">
+            <a href="data_pengajuan.php">
                 <span class="nav-icon">
                     <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
                 </span>
                 Data Pengajuan
+            </a>
+            <a href="kelola_admin.php">
+                <span class="nav-icon">
+                    <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M8.5 3a4 4 0 100 8 4 4 0 000-8zM20 8v6M23 11h-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                Tambah Admin
             </a>
             <a href="../index.php">
                 <span class="nav-icon">
@@ -124,6 +149,7 @@ $hasil = mysqli_stmt_get_result($stmt);
                     <strong><?php echo htmlspecialchars($admin_username); ?></strong>
                     <span>Administrator</span>
                 </div>
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" style="color: var(--text-muted); margin-left: 4px;"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
         </header>
 
@@ -170,87 +196,48 @@ $hasil = mysqli_stmt_get_result($stmt);
                 </article>
             </section>
 
-            <!-- Table Panel -->
-            <section class="table-panel reveal-card">
-                <div class="table-heading">
-                    <h2>Daftar Pengajuan Terbaru</h2>
-                    <button class="filter-button" type="button">
-                        <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M3 6h18M7 12h10M11 18h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-                        Filter Data
-                    </button>
-                </div>
+            <!-- Filter Waktu -->
+            <form method="GET" action="dashboard.php" style="display: flex; gap: 12px; margin-bottom: 20px; align-items: center;">
+                <select name="bulan" style="padding: 8px 12px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); outline: none;">
+                    <?php foreach($bulan_array as $m => $nama_bulan): ?>
+                        <option value="<?php echo $m; ?>" <?php echo $m === $filter_bulan ? 'selected' : ''; ?>><?php echo $nama_bulan; ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <select name="tahun" style="padding: 8px 12px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); outline: none;">
+                    <?php 
+                    $tahun_sekarang = date('Y');
+                    for($t = $tahun_sekarang - 2; $t <= $tahun_sekarang + 1; $t++): ?>
+                        <option value="<?php echo $t; ?>" <?php echo $t === $filter_tahun ? 'selected' : ''; ?>><?php echo $t; ?></option>
+                    <?php endfor; ?>
+                </select>
+                <button type="submit" style="padding: 8px 16px; background: var(--blue); color: var(--white); border: none; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer;">Filter Grafik</button>
+            </form>
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama Pemohon</th>
-                            <th>Jenis Surat</th>
-                            <th>Tanggal Masuk</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $nomor = $offset + 1; ?>
-                        <?php while ($row = mysqli_fetch_assoc($hasil)): ?>
-                        <tr>
-                            <td><?php echo str_pad((string)$nomor, 2, "0", STR_PAD_LEFT); ?></td>
-                            <td>
-                                <strong><?php echo htmlspecialchars($row['nama']); ?></strong><br>
-                                <small>NIK: <?php echo htmlspecialchars($row['nik']); ?></small>
-                            </td>
-                            <td><?php echo htmlspecialchars($row['jenis_surat']); ?></td>
-                            <td><?php echo date("d M Y", strtotime($row['tanggal'])); ?></td>
-                            <td><span class="status <?php echo htmlspecialchars($row['status']); ?>"><?php echo htmlspecialchars($row['status']); ?></span></td>
-                            <td>
-                                <div class="action-group">
-                                    <!-- View -->
-                                    <a class="icon-action" href="detail.php?id=<?php echo $row['id']; ?>" title="Lihat detail">
-                                        <svg width="15" height="15" fill="none" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/></svg>
-                                    </a>
-                                    <!-- Edit / Refresh -->
-                                    <a class="icon-action" href="detail.php?id=<?php echo $row['id']; ?>" title="Ubah status"
-                                       <?php if ($row['status'] === 'selesai') echo 'style="opacity:.35;pointer-events:none;"'; ?>>
-                                        <svg width="15" height="15" fill="none" viewBox="0 0 24 24"><path d="M4 4v5h5M20 20v-5h-5M4 9a9 9 0 0114.9-3.4M20 15A9 9 0 015.1 18.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-                                    </a>
-                                    <!-- Approve -->
-                                    <a class="icon-action approve" href="detail.php?id=<?php echo $row['id']; ?>" title="Selesaikan"
-                                       <?php if ($row['status'] === 'selesai') echo 'style="opacity:.35;pointer-events:none;"'; ?>>
-                                        <svg width="15" height="15" fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        <?php $nomor++; endwhile; ?>
-                        <?php if (mysqli_num_rows($hasil) === 0): ?>
-                        <tr>
-                            <td colspan="6" class="empty-table">Belum ada data pengajuan dari masyarakat.</td>
-                        </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-
-                <!-- Pagination -->
-                <div class="table-footer">
-                    <span>
-                        Menampilkan <?php echo $total_data_tampil > 0 ? $offset + 1 : 0; ?>–<?php echo min($offset + $per_page, $total_data_tampil); ?>
-                        dari <?php echo number_format($total_data_tampil); ?> data
-                    </span>
-                    <div class="pagination">
-                        <?php if ($page > 1): ?>
-                            <a class="page-btn" href="?page=<?php echo $page - 1; ?>&q=<?php echo urlencode($kata_kunci); ?>">Sebelumnya</a>
-                        <?php else: ?>
-                            <button class="page-btn" disabled>Sebelumnya</button>
-                        <?php endif; ?>
-
-                        <?php if ($page < $total_pages): ?>
-                            <a class="page-btn primary" href="?page=<?php echo $page + 1; ?>&q=<?php echo urlencode($kata_kunci); ?>">Berikutnya</a>
-                        <?php else: ?>
-                            <button class="page-btn primary" disabled>Berikutnya</button>
-                        <?php endif; ?>
+            <!-- Charts Section -->
+            <section class="charts-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                <!-- Doughnut Chart: Status Pengajuan -->
+                <article class="chart-card reveal-card" style="background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow);">
+                    <h3 style="font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 20px;">Persentase Status (<?php echo $bulan_array[$filter_bulan] . " " . $filter_tahun; ?>)</h3>
+                    <div style="height: 250px; display: flex; justify-content: center;">
+                        <canvas id="statusChart"></canvas>
                     </div>
-                </div>
+                </article>
+
+                <!-- Line Chart: Tren Bulanan -->
+                <article class="chart-card reveal-card" style="background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); animation-delay: 0.1s;">
+                    <h3 style="font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 20px;">Tren Pengajuan (<?php echo $bulan_array[$filter_bulan] . " " . $filter_tahun; ?>)</h3>
+                    <div style="height: 250px;">
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </article>
+
+                <!-- Bar Chart: Jenis Surat -->
+                <article class="chart-card reveal-card" style="grid-column: 1 / -1; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); animation-delay: 0.2s;">
+                    <h3 style="font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 20px;">Distribusi Jenis Surat</h3>
+                    <div style="height: 300px;">
+                        <canvas id="jenisChart"></canvas>
+                    </div>
+                </article>
             </section>
 
         </div><!-- /.content-body -->
@@ -270,6 +257,93 @@ $hasil = mysqli_stmt_get_result($stmt);
 
     </main><!-- /.dashboard-main -->
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../assets/js/script.js"></script>
+    <script>
+        // Chart.js Configuration
+        Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+        Chart.defaults.color = "#6b7a99";
+        
+        // 1. Status Chart (Doughnut)
+        new Chart(document.getElementById('statusChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Pending', 'Diproses', 'Selesai'],
+                datasets: [{
+                    data: [<?php echo (int)$chart_status['pending']; ?>, <?php echo (int)$chart_status['diproses']; ?>, <?php echo (int)$chart_status['selesai']; ?>],
+                    backgroundColor: ['#64748b', '#f59e0b', '#10b981'], // Tailwind Slate, Amber, Emerald
+                    borderWidth: 0,
+                    hoverOffset: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: { duration: 1500, easing: 'easeOutQuart' },
+                plugins: {
+                    legend: { position: 'bottom', labels: { padding: 20, usePointStyle: true, boxWidth: 8 } }
+                },
+                cutout: '75%'
+            }
+        });
+
+        // 2. Trend Chart (Line)
+        new Chart(document.getElementById('trendChart'), {
+            type: 'line',
+            data: {
+                labels: <?php echo json_encode($chart_dates); ?>,
+                datasets: [{
+                    label: 'Pengajuan Masuk',
+                    data: <?php echo json_encode($chart_counts); ?>,
+                    borderColor: '#6366f1', // Tailwind Indigo
+                    backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#ffffff',
+                    pointBorderColor: '#6366f1',
+                    pointBorderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: { duration: 2000, easing: 'easeOutExpo' },
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, grid: { borderDash: [4, 4], color: '#e2e8f3' }, ticks: { stepSize: 1 } },
+                    x: { grid: { display: false }, ticks: { maxTicksLimit: 10 } }
+                }
+            }
+        });
+
+        // 3. Jenis Surat Chart (Bar)
+        new Chart(document.getElementById('jenisChart'), {
+            type: 'bar',
+            data: {
+                labels: <?php echo json_encode($chart_jenis_labels); ?>,
+                datasets: [{
+                    label: 'Jumlah Pengajuan',
+                    data: <?php echo json_encode($chart_jenis_data); ?>,
+                    backgroundColor: '#8b5cf6', // Tailwind Violet
+                    borderRadius: 6,
+                    barThickness: 'flex',
+                    maxBarThickness: 40
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: { duration: 1500, easing: 'easeOutBounce' },
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, grid: { borderDash: [4, 4], color: '#e2e8f3' }, ticks: { stepSize: 1 } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
 </body>
 </html>

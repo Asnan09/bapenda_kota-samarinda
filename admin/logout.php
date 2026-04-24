@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // admin/logout.php
 // Mengakhiri session admin lalu kembali ke halaman login.
 session_start();

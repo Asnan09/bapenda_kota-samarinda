@@ -1,4 +1,4 @@
-ï»¿<?php
+<?php
 // admin/login.php
 session_start();
 if (isset($_SESSION['admin_id'])) { header("Location: dashboard.php"); exit; }
@@ -8,7 +8,7 @@ if (isset($_SESSION['admin_id'])) { header("Location: dashboard.php"); exit; }
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Admin â€” Bapenda Samarinda</title>
+    <title>Login Admin — Bapenda Samarinda</title>
     <link rel="stylesheet" href="../assets/css/admin.css">
 </head>
 <body class="login-page">
@@ -24,7 +24,7 @@ if (isset($_SESSION['admin_id'])) { header("Location: dashboard.php"); exit; }
 
     <main class="login-shell">
         <section class="login-box">
-            <span class="secure-badge">ðŸ”’ Portal Keamanan</span>
+            <span class="secure-badge">?? Portal Keamanan</span>
             <h1>Login Admin</h1>
             <p>Silakan masuk menggunakan kredensial resmi Bapenda Samarinda.</p>
 
@@ -37,17 +37,17 @@ if (isset($_SESSION['admin_id'])) { header("Location: dashboard.php"); exit; }
                     <input type="text" name="username" placeholder="admin" required autocomplete="username">
                 </label>
                 <label>Kata Sandi
-                    <input type="password" name="password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" required autocomplete="current-password">
+                    <input type="password" name="password" placeholder="••••••••" required autocomplete="current-password">
                 </label>
                 <a class="forgot-link" href="#">Lupa kata sandi?</a>
-                <button type="submit">Masuk ke Dashboard â†’</button>
+                <button type="submit">Masuk ke Dashboard ?</button>
             </form>
 
             <div class="support-box">Butuh bantuan teknis?<br>Hubungi Divisi IT di ext. 402</div>
         </section>
     </main>
 
-    <footer class="admin-footer">BAPENDA SAMARINDA &nbsp;Â©&nbsp; 2024 Badan Pendapatan Daerah Kota Samarinda.</footer>
+    <footer class="admin-footer">BAPENDA SAMARINDA &nbsp;©&nbsp; 2024 Badan Pendapatan Daerah Kota Samarinda.</footer>
     <script src="../assets/js/script.js"></script>
 </body>
 </html>
