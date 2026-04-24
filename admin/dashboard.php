@@ -65,7 +65,7 @@ $bulan_array = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Admin — Bapenda Samarinda</title>
-    <link rel="stylesheet" href="../assets/css/admin.css?v=4">
+    <link rel="stylesheet" href="../assets/css/admin.css?v=6">
 </head>
 <body class="dashboard-page">
 
@@ -197,20 +197,20 @@ $bulan_array = [
             </section>
 
             <!-- Filter Waktu -->
-            <form method="GET" action="dashboard.php" style="display: flex; gap: 12px; margin-bottom: 20px; align-items: center;">
-                <select name="bulan" style="padding: 8px 12px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); outline: none;">
+            <form method="GET" action="dashboard.php" style="display: flex; gap: 12px; margin-bottom: 20px; align-items: center;" class="filter-form">
+                <select name="bulan" class="modern-select">
                     <?php foreach($bulan_array as $m => $nama_bulan): ?>
                         <option value="<?php echo $m; ?>" <?php echo $m === $filter_bulan ? 'selected' : ''; ?>><?php echo $nama_bulan; ?></option>
                     <?php endforeach; ?>
                 </select>
-                <select name="tahun" style="padding: 8px 12px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); outline: none;">
+                <select name="tahun" class="modern-select">
                     <?php 
                     $tahun_sekarang = date('Y');
                     for($t = $tahun_sekarang - 2; $t <= $tahun_sekarang + 1; $t++): ?>
                         <option value="<?php echo $t; ?>" <?php echo $t === $filter_tahun ? 'selected' : ''; ?>><?php echo $t; ?></option>
                     <?php endfor; ?>
                 </select>
-                <button type="submit" style="padding: 8px 16px; background: var(--blue); color: var(--white); border: none; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer;">Filter Grafik</button>
+                <button type="submit" style="padding: 10px 20px; background: var(--blue); color: var(--white); border: none; border-radius: var(--radius-sm); font-weight: 600; font-size: 14px; cursor: pointer; transition: background 0.2s; height: 42px;">Filter Grafik</button>
             </form>
 
             <!-- Charts Section -->
@@ -258,7 +258,7 @@ $bulan_array = [
     </main><!-- /.dashboard-main -->
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/script.js?v=6"></script>
     <script>
         // Chart.js Configuration
         Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
