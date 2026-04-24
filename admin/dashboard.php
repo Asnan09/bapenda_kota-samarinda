@@ -107,20 +107,8 @@ $bulan_array = [
                 </span>
                 Tambah Admin
             </a>
-            <a href="../index.php">
-                <span class="nav-icon">
-                    <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-                </span>
-                Pajak Daerah
-            </a>
         </nav>
         <div class="sidebar-bottom">
-            <a href="#">
-                <span class="nav-icon">
-                    <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 8h.01M12 12v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-                </span>
-                Bantuan
-            </a>
             <a class="sidebar-logout" href="logout.php">
                 <span class="nav-icon">
                     <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -139,10 +127,6 @@ $bulan_array = [
                 <h1>Ringkasan Data</h1>
                 <p>Dashboard Administrasi Terpadu</p>
             </div>
-            <form class="search-box" method="GET" action="">
-                <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-                <input type="text" name="q" placeholder="Cari nomor pengajuan..." value="<?php echo htmlspecialchars($kata_kunci); ?>">
-            </form>
             <div class="admin-profile" title="<?php echo htmlspecialchars($admin_username); ?>">
                 <div class="admin-avatar"><?php echo htmlspecialchars($admin_initial); ?></div>
                 <div>
