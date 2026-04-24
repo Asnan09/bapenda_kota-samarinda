@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // admin/update_status.php
 // Memperbarui status pengajuan dari halaman detail.
 session_start();

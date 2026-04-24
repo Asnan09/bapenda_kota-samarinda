@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // admin/detail.php
 session_start();
 if (!isset($_SESSION['admin_id'])) { header("Location: login.php"); exit; }
@@ -20,7 +20,7 @@ if (!$data) { header("Location: dashboard.php"); exit; }
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Pengajuan #<?php echo $data['id']; ?> — Bapenda</title>
-    <link rel="stylesheet" href="../assets/css/admin.css">
+    <link rel="stylesheet" href="../assets/css/admin.css?v=4">
 </head>
 <body class="detail-page">
 
@@ -39,10 +39,15 @@ if (!$data) { header("Location: dashboard.php"); exit; }
                     <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2" fill="currentColor" opacity=".5"/><rect x="14" y="3" width="7" height="7" rx="2" fill="currentColor" opacity=".5"/><rect x="3" y="14" width="7" height="7" rx="2" fill="currentColor" opacity=".5"/><rect x="14" y="14" width="7" height="7" rx="2" fill="currentColor" opacity=".5"/></svg>
                 </span>Dashboard
             </a>
-            <a class="active" href="dashboard.php">
+            <a class="active" href="data_pengajuan.php">
                 <span class="nav-icon">
                     <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
                 </span>Data Pengajuan
+            </a>
+            <a href="kelola_admin.php">
+                <span class="nav-icon">
+                    <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M8.5 3a4 4 0 100 8 4 4 0 000-8zM20 8v6M23 11h-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>Tambah Admin
             </a>
         </nav>
         <div class="sidebar-bottom">
@@ -57,7 +62,14 @@ if (!$data) { header("Location: dashboard.php"); exit; }
                 <h1>Detail Pengajuan</h1>
                 <p>ID #<?php echo str_pad($data['id'], 5, '0', STR_PAD_LEFT); ?></p>
             </div>
-            <div class="admin-avatar"><?php echo strtoupper(substr($_SESSION['admin_username'], 0, 1)); ?></div>
+            <div class="admin-profile" title="<?php echo htmlspecialchars($_SESSION['admin_username']); ?>">
+                <div class="admin-avatar"><?php echo strtoupper(substr($_SESSION['admin_username'], 0, 1)); ?></div>
+                <div>
+                    <strong><?php echo htmlspecialchars($_SESSION['admin_username']); ?></strong>
+                    <span>Administrator</span>
+                </div>
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" style="color: var(--text-muted); margin-left: 4px;"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
         </header>
 
         <div class="detail-content">

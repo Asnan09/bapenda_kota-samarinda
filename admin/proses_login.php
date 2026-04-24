@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // admin/proses_login.php
 // Memeriksa username dan password admin menggunakan password_verify.
 session_start();
