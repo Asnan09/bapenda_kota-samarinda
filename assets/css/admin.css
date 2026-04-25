@@ -451,6 +451,7 @@ body.menu-open .sidebar-backdrop { display: block; }
 }
 
 .back-link {
+    align-self: flex-start;
     display: flex;
     align-items: center;
     gap: 8px;
