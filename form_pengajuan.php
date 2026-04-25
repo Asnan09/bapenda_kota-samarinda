@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // form_pengajuan.php
 // Form untuk mengirim pengajuan dan mengunggah berkas pendukung.
 $jenis_surat = [
@@ -15,7 +15,7 @@ $jenis_surat = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Pengajuan</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=3">
 </head>
 <body>
     <header class="navbar">
@@ -109,7 +109,7 @@ $jenis_surat = [
             <p>Mewujudkan pelayanan perpajakan daerah yang modern dan transparan.</p>
         </div>
     </footer>
-    <script src="assets/js/script.js"></script>
+    <script src="assets/js/script.js?v=2"></script>
     <script src="assets/js/form.js"></script>
 </body>
 </html>

@@ -91,9 +91,26 @@ body.page-leaving {
 }
 
 .navbar a {
+    position: relative;
     color: #263241;
     text-decoration: none;
     font-weight: 700;
+}
+
+.navbar a:not(.nav-button)::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--navy);
+    transition: width 0.3s ease;
+}
+
+.navbar a:not(.nav-button):hover::after,
+.navbar a.active:not(.nav-button)::after {
+    width: 100%;
 }
 
 .nav-button {
