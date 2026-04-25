@@ -27,17 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Close on nav link click (mobile)
     sidebar?.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
 
-    // ── Page-link fade (optional smooth nav) ──
-    document.querySelectorAll('.page-link').forEach(link => {
-        link.addEventListener('click', function (e) {
-            const href = this.getAttribute('href');
-            if (!href || href === '#' || href.startsWith('javascript')) return;
-            e.preventDefault();
-            document.body.style.opacity = '0';
-            document.body.style.transition = 'opacity .2s ease';
-            setTimeout(() => { window.location.href = href; }, 200);
-        });
-    });
 
     // ── Custom Modern Select ──
     document.querySelectorAll('select.modern-select').forEach(select => {
@@ -88,5 +77,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('click', () => {
         document.querySelectorAll('.custom-select').forEach(s => s.classList.remove('open'));
+    });
+
+    // ── Custom Smooth Scroll for Anchor Links ──
+    document.querySelectorAll('a[href^="#"], a[href*="#lokasi"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const url = new URL(this.href, window.location.origin);
+            if (url.pathname === window.location.pathname) {
+                const targetId = url.hash;
+                if (!targetId) return;
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                    const startPosition = window.pageYOffset;
+                    const distance = targetPosition - startPosition;
+                    const duration = 1200; // Slower duration for a more luxurious feel
+                    let start = null;
+                    
+                    // Easing function: easeInOutQuart for beautiful smooth transition
+                    const easeInOutQuart = (t) => {
+                        return t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
+                    };
+
+                    const step = (timestamp) => {
+                        if (!start) start = timestamp;
+                        const progress = timestamp - start;
+                        const percentage = Math.min(progress / duration, 1);
+                        
+                        window.scrollTo(0, startPosition + distance * easeInOutQuart(percentage));
+                        
+                        if (progress < duration) {
+                            window.requestAnimationFrame(step);
+                        } else {
+                            history.pushState(null, null, targetId);
+                        }
+                    };
+                    
+                    window.requestAnimationFrame(step);
+                }
+            }
+        });
     });
 });

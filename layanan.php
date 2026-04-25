@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // layanan.php
 // Menampilkan daftar layanan surat yang tersedia untuk masyarakat.
 $daftar_layanan = [
@@ -15,15 +15,15 @@ $daftar_layanan = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Layanan</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=3">
 </head>
 <body>
     <header class="navbar">
         <div class="brand">BAPENDA SAMARINDA</div>
         <nav>
             <a href="index.php">Beranda</a>
-            <a href="form_pengajuan.php">Pengajuan</a>
-            <a href="cek_status.php">Cek Status</a>
+            <a href="layanan.php" class="active">Layanan</a>
+            <a href="index.php#lokasi">Lokasi</a>
             <a class="nav-button" href="admin/login.php">Login Admin</a>
         </nav>
     </header>
@@ -51,6 +51,6 @@ $daftar_layanan = [
             <p>Layanan surat online yang terhubung dengan database bapenda.</p>
         </div>
     </footer>
-    <script src="assets/js/script.js"></script>
+    <script src="assets/js/script.js?v=2"></script>
 </body>
 </html>

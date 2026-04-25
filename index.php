@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // index.php
 // Landing page sederhana untuk layanan surat online Bapenda Samarinda.
 ?>
@@ -8,13 +8,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Layanan Surat Online Bapenda Samarinda</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=3">
 </head>
 <body>
     <header class="navbar">
         <div class="brand">BAPENDA SAMARINDA</div>
         <nav>
-            <a href="index.php">Beranda</a>
+            <a href="index.php" class="active">Beranda</a>
             <a href="layanan.php">Layanan</a>
             <a href="#lokasi">Lokasi</a>
             <a class="nav-button" href="admin/login.php">Login Admin</a>
@@ -88,6 +88,6 @@
             <a href="#">Kontak Kami</a>
         </div>
     </footer>
-    <script src="assets/js/script.js"></script>
+    <script src="assets/js/script.js?v=2"></script>
 </body>
 </html>
