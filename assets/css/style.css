@@ -1,5 +1,7 @@
 /* assets/css/style.css */
 /* Tampilan publik Bapenda Samarinda tanpa framework. */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
 * {
     box-sizing: border-box;
 }
@@ -15,7 +17,7 @@
 
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
     color: #111827;
     background: var(--soft);
     animation: pageFadeIn 0.45s ease both;

@@ -9,8 +9,8 @@ if (isset($_SESSION['admin_id'])) { header("Location: dashboard.php"); exit; }
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Admin - Bapenda Samarinda</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/admin.css?v=9">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/admin.css?v=10">
 </head>
 <body class="login-page-new">
 
@@ -46,7 +46,7 @@ if (isset($_SESSION['admin_id'])) { header("Location: dashboard.php"); exit; }
                     <label>KATA SANDI</label>
                     <div class="input-wrapper">
                         <svg class="input-icon" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-                        <input type="password" name="password" id="passwordField" placeholder="••••••••" required autocomplete="current-password">
+                        <input type="password" name="password" id="passwordField" placeholder="********" required autocomplete="current-password">
                         <button type="button" class="toggle-password" id="togglePassword">
                             <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                         </button>
@@ -78,3 +78,4 @@ if (isset($_SESSION['admin_id'])) { header("Location: dashboard.php"); exit; }
     </script>
 </body>
 </html>
+

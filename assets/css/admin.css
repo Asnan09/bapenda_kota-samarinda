@@ -1,11 +1,11 @@
-/* =========================================
-   BAPENDA SAMARINDA — Admin Portal CSS
+﻿/* =========================================
+   BAPENDA SAMARINDA â€” Admin Portal CSS
    Target: Dashboard design (Image 2)
    ========================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
-/* ── Reset & Base ── */
+/* â”€â”€ Reset & Base â”€â”€ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -33,7 +33,7 @@
 }
 
 html, body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 14px;
     color: var(--text);
     background: var(--bg);
@@ -44,7 +44,7 @@ html, body {
 a { text-decoration: none; color: inherit; }
 button { cursor: pointer; font-family: inherit; }
 
-/* ── Page Loader ── */
+/* â”€â”€ Page Loader â”€â”€ */
 .page-loader {
     position: fixed; inset: 0; z-index: 9999;
     background: var(--navy);
@@ -64,10 +64,10 @@ button { cursor: pointer; font-family: inherit; }
 .page-loader p { color: rgba(255,255,255,.7); font-size: 13px; }
 @keyframes pulse { to { transform: scale(1.08); } }
 
-/* ── Layout ── */
+/* â”€â”€ Layout â”€â”€ */
 .dashboard-page { display: flex; min-height: 100vh; }
 
-/* ── Sidebar ── */
+/* â”€â”€ Sidebar â”€â”€ */
 .sidebar {
     width: var(--sidebar-w);
     min-height: 100vh;
@@ -148,7 +148,7 @@ button { cursor: pointer; font-family: inherit; }
 .sidebar-logout .nav-icon { color: var(--accent); }
 .sidebar-logout:hover { background: #fef2f2 !important; }
 
-/* ── Main Content ── */
+/* â”€â”€ Main Content â”€â”€ */
 .dashboard-main {
     margin-left: var(--sidebar-w);
     flex: 1; min-height: 100vh;
@@ -156,7 +156,7 @@ button { cursor: pointer; font-family: inherit; }
     padding: 0;
 }
 
-/* ── Top Bar ── */
+/* â”€â”€ Top Bar â”€â”€ */
 .dashboard-top {
     background: var(--white);
     border-bottom: 1px solid var(--border);
@@ -230,10 +230,10 @@ button { cursor: pointer; font-family: inherit; }
 }
 .admin-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
-/* ── Content Padding ── */
+/* â”€â”€ Content Padding â”€â”€ */
 .content-body { padding: 28px 32px; flex: 1; }
 
-/* ── Stats Grid ── */
+/* â”€â”€ Stats Grid â”€â”€ */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -280,7 +280,7 @@ button { cursor: pointer; font-family: inherit; }
 .stat-icon-box.orange { background: var(--orange-bg); }
 .stat-icon-box.gray   { background: var(--gray-badge-bg); }
 
-/* ── Table Panel ── */
+/* â”€â”€ Table Panel â”€â”€ */
 .table-panel {
     background: var(--white);
     border: 1px solid var(--border);
@@ -373,7 +373,7 @@ tbody td small  { font-size: 12px; color: var(--text-muted); }
 .page-btn.primary { background: var(--navy); color: var(--white); border-color: var(--navy); }
 .page-btn.primary:hover { background: var(--navy-mid); border-color: var(--navy-mid); }
 
-/* ── Footer ── */
+/* â”€â”€ Footer â”€â”€ */
 .dashboard-footer {
     background: var(--navy);
     color: var(--white);
@@ -388,7 +388,7 @@ tbody td small  { font-size: 12px; color: var(--text-muted); }
 .footer-links a { font-size: 13px; color: rgba(255,255,255,.6); transition: color .18s; }
 .footer-links a:hover { color: var(--white); }
 
-/* ── Mobile menu ── */
+/* â”€â”€ Mobile menu â”€â”€ */
 .mobile-menu-button {
     display: none;
     position: fixed; top: 16px; left: 16px; z-index: 300;
@@ -409,7 +409,7 @@ tbody td small  { font-size: 12px; color: var(--text-muted); }
 body.menu-open .sidebar { transform: none; }
 body.menu-open .sidebar-backdrop { display: block; }
 
-/* ── Reveal animations ── */
+/* â”€â”€ Reveal animations â”€â”€ */
 .reveal-card {
     opacity: 0; transform: translateY(18px);
     animation: revealUp .75s ease forwards;
@@ -420,7 +420,7 @@ body.menu-open .sidebar-backdrop { display: block; }
 .table-panel { animation-delay: .26s; }
 @keyframes revealUp { to { opacity: 1; transform: none; } }
 
-/* ── Mobile Help (hidden on desktop) ── */
+/* â”€â”€ Mobile Help (hidden on desktop) â”€â”€ */
 .mobile-help { display: none; }
 
 /* ============================================
@@ -432,7 +432,7 @@ body.menu-open .sidebar-backdrop { display: block; }
     justify-content: center;
     min-height: 100vh;
     margin: 0;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Poppins', sans-serif;
     background: var(--bg);
     position: relative;
     overflow: hidden;
@@ -771,3 +771,4 @@ body.menu-open .sidebar-backdrop { display: block; }
     .admin-profile svg { display: none; }
     .admin-profile { padding: 4px; border: none; }
 }
+

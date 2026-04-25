@@ -23,7 +23,7 @@ $hasil_admin = mysqli_query($koneksi, $query_admin);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kelola Admin — Bapenda Samarinda</title>
-    <link rel="stylesheet" href="../assets/css/admin.css?v=4">
+    <link rel="stylesheet" href="../assets/css/admin.css?v=10">
     <style>
         /* Modal Styles */
         .modal-overlay {
