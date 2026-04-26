@@ -27,9 +27,6 @@
             <p class="label">Pelayanan Publik Modern</p>
             <h1>Layanan Surat Online Badan Pendapatan Daerah Kota Samarinda</h1>
             <p>Transformasi digital pelayanan pajak daerah. Ajukan berbagai kebutuhan administrasi perpajakan dan pantau status pengajuan dengan aman.</p>
-            <div class="actions">
-                <a class="btn primary" href="form_pengajuan.php">Ajukan Surat Sekarang</a>
-            </div>
         </section>
         <section class="hero-image" aria-label="Ilustrasi layanan digital">
             <div class="image-placeholder">BAPENDA<br>SAMARINDA</div>
