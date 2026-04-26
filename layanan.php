@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // layanan.php
 // Menampilkan daftar layanan surat yang tersedia untuk masyarakat.
 $daftar_layanan = [
@@ -23,6 +23,7 @@ $daftar_layanan = [
         <nav>
             <a href="index.php">Beranda</a>
             <a href="layanan.php" class="active">Layanan</a>
+            <a href="cek_status.php">Cek Status</a>
             <a href="index.php#lokasi">Lokasi</a>
             <a class="nav-button" href="admin/login.php">Login Admin</a>
         </nav>
@@ -54,3 +55,4 @@ $daftar_layanan = [
     <script src="assets/js/script.js?v=2"></script>
 </body>
 </html>
+

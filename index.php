@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // index.php
 // Landing page sederhana untuk layanan surat online Bapenda Samarinda.
 ?>
@@ -16,6 +16,7 @@
         <nav>
             <a href="index.php" class="active">Beranda</a>
             <a href="layanan.php">Layanan</a>
+            <a href="cek_status.php">Cek Status</a>
             <a href="#lokasi">Lokasi</a>
             <a class="nav-button" href="admin/login.php">Login Admin</a>
         </nav>
@@ -28,7 +29,6 @@
             <p>Transformasi digital pelayanan pajak daerah. Ajukan berbagai kebutuhan administrasi perpajakan dan pantau status pengajuan dengan aman.</p>
             <div class="actions">
                 <a class="btn primary" href="form_pengajuan.php">Ajukan Surat Sekarang</a>
-                <a class="btn secondary" href="cek_status.php">Cek Status</a>
             </div>
         </section>
         <section class="hero-image" aria-label="Ilustrasi layanan digital">
@@ -91,3 +91,4 @@
     <script src="assets/js/script.js?v=2"></script>
 </body>
 </html>
+

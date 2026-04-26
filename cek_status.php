@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // cek_status.php
 // Halaman untuk masyarakat mengecek status pengajuan berdasarkan ID.
 include "koneksi.php";
@@ -34,6 +34,7 @@ if (isset($_GET['id'])) {
         <nav>
             <a href="index.php">Beranda</a>
             <a href="layanan.php">Layanan</a>
+            <a href="cek_status.php" class="active">Cek Status</a>
             <a href="index.php#lokasi">Lokasi</a>
             <a class="nav-button" href="admin/login.php">Login Admin</a>
         </nav>
@@ -72,3 +73,4 @@ if (isset($_GET['id'])) {
     <script src="assets/js/script.js?v=2"></script>
 </body>
 </html>
+
