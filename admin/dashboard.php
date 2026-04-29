@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // admin/dashboard.php
 session_start();
 if (!isset($_SESSION['admin_id'])) {
@@ -243,7 +243,7 @@ $bulan_array = [
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../assets/js/script.js?v=6"></script>
-    <script>
+     <script>
         // Chart.js Configuration
         Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
         Chart.defaults.color = "#6b7a99";
