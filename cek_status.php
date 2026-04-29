@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // cek_status.php
 // Halaman untuk masyarakat melihat daftar status pengajuan.
 include "koneksi.php";
