@@ -48,12 +48,12 @@
             <p>Pilih jenis layanan surat yang Anda butuhkan.</p>
         </div>
         <div class="service-grid">
-            <article class="card"><span class="icon-box">ID</span><h3>Laporan Pajak</h3><p>Pelaporan dan permintaan administrasi pajak daerah.</p><a href="form_pengajuan.php">Ajukan</a></article>
-            <article class="card"><span class="icon-box">PIN</span><h3>Surat Domisili</h3><p>Keterangan domisili usaha atau tempat tinggal.</p><a href="form_pengajuan.php">Ajukan</a></article>
-            <article class="card"><span class="icon-box">!</span><h3>Pengaduan</h3><p>Sampaikan kendala terkait layanan pajak daerah.</p><a href="form_pengajuan.php">Ajukan</a></article>
-            <article class="card"><span class="icon-box">DOC</span><h3>Surat Keterangan Bebas</h3><p>Pengajuan surat keterangan bebas tunggakan pajak.</p><a href="form_pengajuan.php">Ajukan</a></article>
-            <article class="card"><span class="icon-box">BPHTB</span><h3>Validasi BPHTB</h3><p>Layanan permohonan validasi administrasi BPHTB.</p><a href="form_pengajuan.php">Ajukan</a></article>
-            <article class="card"><span class="icon-box">?</span><h3>Konsultasi Pajak</h3><p>Konsultasi dan informasi perpajakan daerah.</p><a href="form_pengajuan.php">Ajukan</a></article>
+            <article class="card"><span class="icon-box">NEW</span><h3>Pendaftaran Objek Baru</h3><p>Layanan pendaftaran Objek Pajak Baru PBB-P2.</p><a href="form_pengajuan.php">Ajukan</a></article>
+            <article class="card"><span class="icon-box">MUT</span><h3>Mutasi / Pembetulan</h3><p>Permohonan Mutasi atau Pembetulan Subjek/Objek Pajak PBB-P2.</p><a href="form_pengajuan.php">Ajukan</a></article>
+            <article class="card"><span class="icon-box">PCH</span><h3>Pemecahan Objek</h3><p>Layanan Pemecahan Subjek/Objek (Objek Pajak Data Baru).</p><a href="form_pengajuan.php">Ajukan</a></article>
+            <article class="card"><span class="icon-box">KBR</span><h3>Keberatan Pajak</h3><p>Permohonan Keberatan Subjek / Objek Pajak SPPDT PBB-P2.</p><a href="form_pengajuan.php">Ajukan</a></article>
+            <article class="card"><span class="icon-box">HPS</span><h3>Penghapusan SPPT</h3><p>Layanan Penghapusan Subjek/Objek Pajak SPPT PBB-P2.</p><a href="form_pengajuan.php">Ajukan</a></article>
+            <article class="card"><span class="icon-box">GAB</span><h3>Penggabungan Objek</h3><p>Permohonan Penggabungan Subjek/Objek Pajak SPPT PBB-P2.</p><a href="form_pengajuan.php">Ajukan</a></article>
         </div>
     </section>
 

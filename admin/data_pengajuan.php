@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // admin/dashboard.php
 session_start();
 if (!isset($_SESSION['admin_id'])) {
@@ -6,6 +6,11 @@ if (!isset($_SESSION['admin_id'])) {
     exit;
 }
 include "../koneksi.php";
+
+$koneksi = $koneksi ?? null;
+if (!($koneksi instanceof mysqli)) {
+    die("Koneksi database tidak tersedia.");
+}
 
 $per_page = 10;
 $page = max(1, (int)($_GET['page'] ?? 1));
@@ -45,7 +50,7 @@ $hasil = mysqli_stmt_get_result($stmt);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Admin — Bapenda Samarinda</title>
+    <title>Dashboard Admin â€” Bapenda Samarinda</title>
     <link rel="stylesheet" href="../assets/css/admin.css?v=10">
 </head>
 <body class="dashboard-page">
@@ -202,7 +207,7 @@ $hasil = mysqli_stmt_get_result($stmt);
                 <!-- Pagination -->
                 <div class="table-footer">
                     <span>
-                        Menampilkan <?php echo $total_data_tampil > 0 ? $offset + 1 : 0; ?>–<?php echo min($offset + $per_page, $total_data_tampil); ?>
+                        Menampilkan <?php echo $total_data_tampil > 0 ? $offset + 1 : 0; ?>â€“<?php echo min($offset + $per_page, $total_data_tampil); ?>
                         dari <?php echo number_format($total_data_tampil); ?> data
                     </span>
                     <div class="pagination">
@@ -227,7 +232,7 @@ $hasil = mysqli_stmt_get_result($stmt);
         <footer class="dashboard-footer">
             <div class="footer-brand">
                 <strong>BAPENDA SAMARINDA</strong>
-                <span>© 2024 Badan Pendapatan Daerah Kota Samarinda. Hak Cipta Dilindungi.</span>
+                <span>Â© 2024 Badan Pendapatan Daerah Kota Samarinda. Hak Cipta Dilindungi.</span>
             </div>
             <div class="footer-links">
                 <a href="#">Kebijakan Privasi</a>
@@ -241,3 +246,6 @@ $hasil = mysqli_stmt_get_result($stmt);
     <script src="../assets/js/script.js"></script>
 </body>
 </html>
+
+
+

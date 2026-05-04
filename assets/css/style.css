@@ -1,4 +1,4 @@
-/* assets/css/style.css */
+﻿/* assets/css/style.css */
 /* Tampilan publik Bapenda Samarinda tanpa framework. */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
@@ -46,6 +46,7 @@ body.page-leaving {
     transition: opacity 0.55s ease, visibility 0.55s ease;
 }
 
+.page-loader.hidden,
 .page-loader.is-hidden {
     opacity: 0;
     visibility: hidden;
@@ -621,3 +622,115 @@ select:focus {
 }
 
 .btn-status:active { transform: translateY(0); }
+
+/* === Form PBB-P2 === */
+.pbb-layout {
+    align-items: start;
+}
+
+.three-cols {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.upload-grid-pbb {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.upload-card-label {
+    position: relative;
+    margin-bottom: 0;
+}
+
+.upload-card-label input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.upload-box-rich {
+    align-items: center;
+    gap: 8px;
+    min-height: 190px;
+    transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.upload-box-rich strong {
+    color: var(--navy-dark);
+    font-size: 18px;
+}
+
+.upload-box-rich span {
+    color: #475569;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.upload-box-rich em {
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+    color: var(--navy);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.upload-card-label:hover .upload-box-rich,
+.upload-card-label:focus-within .upload-box-rich {
+    border-color: rgba(0, 43, 91, 0.35);
+    box-shadow: 0 18px 35px rgba(0, 27, 61, 0.08);
+    transform: translateY(-2px);
+}
+
+.checklist-card ol {
+    margin: 0;
+    padding-left: 20px;
+    color: #475569;
+    display: grid;
+    gap: 10px;
+    line-height: 1.6;
+}
+
+/* === Admin detail and profile polish === */
+.admin-profile {
+    min-width: 0;
+    max-width: 290px;
+    margin-left: auto;
+}
+
+.dashboard-top {
+    flex-wrap: wrap;
+}
+
+.detail-card-wide {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 24px;
+}
+
+.document-header-block {
+    margin-top: 12px;
+}
+
+.detail-mini-text {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.detail-empty {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+@media (max-width: 1024px) {
+    .three-cols,
+    .upload-grid-pbb {
+        grid-template-columns: 1fr;
+    }
+}
+
+

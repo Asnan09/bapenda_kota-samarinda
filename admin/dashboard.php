@@ -7,6 +7,11 @@ if (!isset($_SESSION['admin_id'])) {
 }
 include "../koneksi.php";
 
+$koneksi = $koneksi ?? null;
+if (!($koneksi instanceof mysqli)) {
+    die("Koneksi database tidak tersedia.");
+}
+
 $per_page = 10;
 $page = max(1, (int)($_GET['page'] ?? 1));
 $offset = ($page - 1) * $per_page;
@@ -129,11 +134,11 @@ $bulan_array = [
             </div>
             <div class="admin-profile" title="<?php echo htmlspecialchars($admin_username); ?>">
                 <div class="admin-avatar"><?php echo htmlspecialchars($admin_initial); ?></div>
-                <div>
+                <div class="admin-profile-info">
                     <strong><?php echo htmlspecialchars($admin_username); ?></strong>
                     <span>Administrator</span>
                 </div>
-                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" style="color: var(--text-muted); margin-left: 4px;"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="admin-profile-dot" aria-hidden="true"></span>
             </div>
         </header>
 
@@ -331,3 +336,5 @@ $bulan_array = [
     </script>
 </body>
 </html>
+
+

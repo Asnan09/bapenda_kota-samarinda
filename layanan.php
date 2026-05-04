@@ -2,11 +2,12 @@
 // layanan.php
 // Menampilkan daftar layanan surat yang tersedia untuk masyarakat.
 $daftar_layanan = [
-    "Surat Keterangan Pajak Daerah",
-    "Surat Keterangan NJOP",
-    "Surat Validasi Pajak Daerah",
-    "Surat Permohonan Informasi Pajak",
-    "Surat Layanan Administrasi Bapenda"
+    "Pendaftaran Objek Pajak Baru PBB-P2",
+    "Mutasi / Pembetulan Subjek/Objek Pajak PBB-P2",
+    "Pemecahan Subjek/Objek (Objek Pajak Data Baru)",
+    "Keberatan Subjek / Objek Pajak SPPDT PBB-P2",
+    "Penghapusan Subjek/Objek Pajak SPPT PBB-P2",
+    "Penggabungan Subjek/Objek Pajak SPPT PBB-P2"
 ];
 ?>
 <!DOCTYPE html>

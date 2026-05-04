@@ -1,29 +1,53 @@
-<?php
+﻿<?php
 // admin/detail.php
 session_start();
-if (!isset($_SESSION['admin_id'])) { header("Location: login.php"); exit; }
+if (!isset($_SESSION['admin_id'])) {
+    header("Location: login.php");
+    exit;
+}
 include "../koneksi.php";
 
+$koneksi = $koneksi ?? null;
+if (!($koneksi instanceof mysqli)) {
+    die("Koneksi database tidak tersedia.");
+}
+
 $id_pengajuan = (int)($_GET['id'] ?? 0);
-$query = "SELECT pengajuan.*, berkas.file_ktp, berkas.file_pendukung
-          FROM pengajuan LEFT JOIN berkas ON berkas.pengajuan_id = pengajuan.id
+$query = "SELECT pengajuan.*, berkas.*
+          FROM pengajuan
+          LEFT JOIN berkas ON berkas.pengajuan_id = pengajuan.id
           WHERE pengajuan.id = ?";
 $stmt = mysqli_prepare($koneksi, $query);
 mysqli_stmt_bind_param($stmt, "i", $id_pengajuan);
 mysqli_stmt_execute($stmt);
 $data = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
-if (!$data) { header("Location: dashboard.php"); exit; }
+if (!$data) {
+    header("Location: dashboard.php");
+    exit;
+}
+
+$dokumen_pbb = [
+    'file_ktp' => 'Fotokopi KTP / NPWP Badan',
+    'file_spop_slop' => 'Blangko SPOP / SLOP',
+    'file_surat_pernyataan' => 'Surat Pernyataan Bermaterai',
+    'file_legalisir_tanah' => 'Sertifikat / PPAT / SKUMHAT / IMTN',
+    'file_foto_lokasi' => 'Foto Lokasi Tanah dan Bangunan',
+    'file_titik_koordinat' => 'Titik Koordinat Google Maps',
+    'file_surat_kuasa' => 'Surat Kuasa Pengurusan',
+    'file_sppdt_pembanding' => 'SPPDT-P2 Tetangga',
+    'file_akta_ahli_waris' => 'Akta Kematian / Ahli Waris / KK',
+    'file_surat_beda_nama' => 'Surat Keterangan Beda Nama'
+];
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Pengajuan #<?php echo $data['id']; ?> — Bapenda</title>
-    <link rel="stylesheet" href="../assets/css/admin.css?v=10">
+    <title>Detail Pengajuan #<?php echo (int) $data['id']; ?> - Bapenda</title>
+    <link rel="stylesheet" href="../assets/css/admin.css?v=11">
 </head>
 <body class="detail-page">
-
     <button class="mobile-menu-button" type="button" data-menu-toggle><span></span><span></span><span></span></button>
     <div class="sidebar-backdrop" data-menu-close></div>
 
@@ -60,15 +84,15 @@ if (!$data) { header("Location: dashboard.php"); exit; }
         <header class="dashboard-top">
             <div>
                 <h1>Detail Pengajuan</h1>
-                <p>ID #<?php echo str_pad($data['id'], 5, '0', STR_PAD_LEFT); ?></p>
+                <p>ID #<?php echo str_pad((string) $data['id'], 5, '0', STR_PAD_LEFT); ?></p>
             </div>
             <div class="admin-profile" title="<?php echo htmlspecialchars($_SESSION['admin_username']); ?>">
                 <div class="admin-avatar"><?php echo strtoupper(substr($_SESSION['admin_username'], 0, 1)); ?></div>
-                <div>
+                <div class="admin-profile-info">
                     <strong><?php echo htmlspecialchars($_SESSION['admin_username']); ?></strong>
                     <span>Administrator</span>
                 </div>
-                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" style="color: var(--text-muted); margin-left: 4px;"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="admin-profile-dot" aria-hidden="true"></span>
             </div>
         </header>
 
@@ -78,26 +102,42 @@ if (!$data) { header("Location: dashboard.php"); exit; }
                 Kembali ke Data Pengajuan
             </a>
 
-            <div class="detail-card reveal-card">
+            <div class="detail-card reveal-card detail-card-wide">
                 <div class="detail-card-header">
                     <h2>Informasi Pemohon</h2>
                     <span class="status <?php echo htmlspecialchars($data['status']); ?>"><?php echo htmlspecialchars($data['status']); ?></span>
                 </div>
 
                 <div class="detail-field">
-                    <label>Nama Lengkap</label>
+                    <label>Nama Wajib Pajak</label>
                     <span><?php echo htmlspecialchars($data['nama']); ?></span>
                 </div>
                 <div class="detail-field">
-                    <label>NIK</label>
+                    <label>NIK / NPWP</label>
                     <span><?php echo htmlspecialchars($data['nik']); ?></span>
                 </div>
                 <div class="detail-field">
-                    <label>Alamat</label>
-                    <span><?php echo htmlspecialchars($data['alamat']); ?></span>
+                    <label>Alamat Wajib Pajak</label>
+                    <span><?php echo nl2br(htmlspecialchars($data['alamat'])); ?></span>
                 </div>
                 <div class="detail-field">
-                    <label>No. Handphone</label>
+                    <label>Alamat Objek Pajak</label>
+                    <span><?php echo nl2br(htmlspecialchars($data['alamat_objek_pajak'] ?? '-')); ?></span>
+                </div>
+                <div class="detail-field">
+                    <label>Kelurahan</label>
+                    <span><?php echo htmlspecialchars($data['kelurahan'] ?? '-'); ?></span>
+                </div>
+                <div class="detail-field">
+                    <label>Kecamatan</label>
+                    <span><?php echo htmlspecialchars($data['kecamatan'] ?? '-'); ?></span>
+                </div>
+                <div class="detail-field">
+                    <label>Kota</label>
+                    <span><?php echo htmlspecialchars($data['kota'] ?? 'Samarinda'); ?></span>
+                </div>
+                <div class="detail-field">
+                    <label>Telepon / HP / E-Mail</label>
                     <span><?php echo htmlspecialchars($data['no_hp']); ?></span>
                 </div>
                 <div class="detail-field">
@@ -106,28 +146,32 @@ if (!$data) { header("Location: dashboard.php"); exit; }
                 </div>
                 <div class="detail-field">
                     <label>Tanggal Pengajuan</label>
-                    <span><?php echo date("d F Y", strtotime($data['tanggal'])); ?></span>
-                </div>
-                <div class="detail-field">
-                    <label>File KTP</label>
-                    <?php if ($data['file_ktp']): ?>
-                        <a href="../uploads/<?php echo htmlspecialchars($data['file_ktp']); ?>" target="_blank">Lihat File KTP →</a>
-                    <?php else: ?><span style="color:var(--text-muted)">Tidak tersedia</span><?php endif; ?>
-                </div>
-                <div class="detail-field">
-                    <label>File Pendukung</label>
-                    <?php if ($data['file_pendukung']): ?>
-                        <a href="../uploads/<?php echo htmlspecialchars($data['file_pendukung']); ?>" target="_blank">Lihat File Pendukung →</a>
-                    <?php else: ?><span style="color:var(--text-muted)">Tidak tersedia</span><?php endif; ?>
+                    <span><?php echo date('d F Y', strtotime($data['tanggal'])); ?></span>
                 </div>
 
+                <div class="detail-card-header document-header-block">
+                    <h2>Dokumen yang Diunggah</h2>
+                    <span class="detail-mini-text">Semua file tersimpan di folder uploads</span>
+                </div>
+
+                <?php foreach ($dokumen_pbb as $kolom => $label): ?>
+                    <div class="detail-field">
+                        <label><?php echo htmlspecialchars($label); ?></label>
+                        <?php if (!empty($data[$kolom])): ?>
+                            <a href="../uploads/<?php echo htmlspecialchars($data[$kolom]); ?>" target="_blank">Lihat Dokumen</a>
+                        <?php else: ?>
+                            <span class="detail-empty">Tidak dilampirkan</span>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+
                 <form action="update_status.php" method="POST" class="status-form">
-                    <input type="hidden" name="id" value="<?php echo $data['id']; ?>">
+                    <input type="hidden" name="id" value="<?php echo (int) $data['id']; ?>">
                     <label>Ubah Status Pengajuan
                         <select name="status" required>
-                            <option value="pending"  <?php echo $data['status']==='pending'  ? 'selected' : ''; ?>>Pending</option>
-                            <option value="diproses" <?php echo $data['status']==='diproses' ? 'selected' : ''; ?>>Diproses</option>
-                            <option value="selesai"  <?php echo $data['status']==='selesai'  ? 'selected' : ''; ?>>Selesai</option>
+                            <option value="pending" <?php echo $data['status'] === 'pending' ? 'selected' : ''; ?>>Pending</option>
+                            <option value="diproses" <?php echo $data['status'] === 'diproses' ? 'selected' : ''; ?>>Diproses</option>
+                            <option value="selesai" <?php echo $data['status'] === 'selesai' ? 'selected' : ''; ?>>Selesai</option>
                         </select>
                     </label>
                     <button type="submit">Simpan Status</button>
@@ -151,3 +195,5 @@ if (!$data) { header("Location: dashboard.php"); exit; }
     <script src="../assets/js/script.js"></script>
 </body>
 </html>
+
+

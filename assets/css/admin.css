@@ -161,9 +161,9 @@ button { cursor: pointer; font-family: inherit; }
     background: var(--white);
     border-bottom: 1px solid var(--border);
     padding: 22px 32px;
-    display: flex; align-items: center; gap: 20px;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
 }
-.dashboard-top > div:first-child { flex: 1; }
+.dashboard-top > div:first-child { flex: 1; min-width: 0; }
 .dashboard-top h1 {
     font-size: 22px; font-weight: 800;
     letter-spacing: .04em; text-transform: uppercase;
@@ -192,18 +192,31 @@ button { cursor: pointer; font-family: inherit; }
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 6px 16px 6px 8px;
-    border: 1px solid transparent;
+    min-width: 220px;
+    justify-content: flex-start;
+    padding: 8px 16px 8px 8px;
+    border: 1px solid var(--border);
     border-radius: 999px;
-    background: transparent;
+    background: var(--white);
     flex-shrink: 0;
     cursor: pointer;
-    transition: background 0.2s, border-color 0.2s;
+    box-shadow: var(--shadow);
+    transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 
 .admin-profile:hover {
     background: var(--bg);
     border-color: var(--border);
+    box-shadow: var(--shadow-lg);
+}
+
+.admin-profile-info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    flex: 1;
 }
 
 .admin-profile strong {
@@ -212,13 +225,26 @@ button { cursor: pointer; font-family: inherit; }
     font-size: 13.5px;
     font-weight: 700;
     line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .admin-profile span {
     display: block;
     color: var(--text-muted);
     font-size: 11px;
-    margin-top: 2px;
+    margin-top: 0;
+    line-height: 1.2;
+}
+
+.admin-profile-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 0 4px #dcfce7;
+    flex-shrink: 0;
 }
 
 .admin-avatar {
@@ -742,8 +768,6 @@ body.menu-open .sidebar-backdrop { display: block; }
     .sidebar {
         transform: translateX(-100%);
     }
-    .sidebar.open { transform: none; }
-    .sidebar-backdrop.open { display: block; }
     .mobile-menu-button { display: flex; }
     .dashboard-main, .detail-main { margin-left: 0; }
     .dashboard-top { padding: 16px 20px 16px 68px; }
@@ -754,6 +778,7 @@ body.menu-open .sidebar-backdrop { display: block; }
     .mobile-help   { display: flex; align-items: flex-start; flex-direction: column; gap: 4px; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 20px; }
     .dashboard-footer { flex-direction: column; padding: 24px 20px; }
     .footer-links { flex-wrap: wrap; gap: 14px; }
+    .admin-profile { min-width: 200px; }
 }
 
 @media (max-width: 600px) {
@@ -767,8 +792,63 @@ body.menu-open .sidebar-backdrop { display: block; }
     form[action="dashboard.php"] select { flex: 1; min-width: 40%; }
     form[action="dashboard.php"] button { width: 100%; flex: none; }
     .dashboard-top h1 { font-size: 18px; }
-    .admin-profile > div:nth-child(2) { display: none; }
-    .admin-profile svg { display: none; }
-    .admin-profile { padding: 4px; border: none; }
+    .admin-profile-info span { display: none; }
+    .admin-profile { min-width: auto; padding: 4px 10px 4px 4px; }
+    .admin-profile-dot { width: 8px; height: 8px; box-shadow: 0 0 0 3px #dcfce7; }
 }
 
+
+/* === Admin profile and detail overrides === */
+.dashboard-top {
+    gap: 18px;
+}
+
+.dashboard-top > form.search-box {
+    margin-left: auto;
+}
+
+.admin-profile {
+    min-width: 0;
+    max-width: 300px;
+    margin-left: auto;
+}
+
+.admin-profile-info {
+    min-width: 0;
+}
+
+.detail-card-wide {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 24px;
+}
+
+.document-header-block {
+    margin-top: 12px;
+}
+
+.detail-mini-text {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.detail-empty {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+@media (max-width: 900px) {
+    .dashboard-top {
+        align-items: flex-start;
+    }
+
+    .admin-profile {
+        width: 100%;
+        max-width: 100%;
+        margin-left: 0;
+    }
+
+    .detail-card-wide {
+        grid-template-columns: 1fr;
+    }
+}
