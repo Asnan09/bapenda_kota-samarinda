@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // admin/dashboard.php
 session_start();
 if (!isset($_SESSION['admin_id'])) {
@@ -93,20 +93,8 @@ $hasil = mysqli_stmt_get_result($stmt);
                 </span>
                 Tambah Admin
             </a>
-            <a href="../index.php">
-                <span class="nav-icon">
-                    <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-                </span>
-                Pajak Daerah
-            </a>
         </nav>
         <div class="sidebar-bottom">
-            <a href="#">
-                <span class="nav-icon">
-                    <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 8h.01M12 12v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-                </span>
-                Bantuan
-            </a>
             <a class="sidebar-logout" href="logout.php">
                 <span class="nav-icon">
                     <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -147,10 +135,12 @@ $hasil = mysqli_stmt_get_result($stmt);
             <section class="table-panel reveal-card">
                 <div class="table-heading">
                     <h2>Daftar Pengajuan Terbaru</h2>
-                    <button class="filter-button" type="button">
-                        <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M3 6h18M7 12h10M11 18h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-                        Filter Data
-                    </button>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="filter-button" type="button">
+                            <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M3 6h18M7 12h10M11 18h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                            Filter Data
+                        </button>
+                    </div>
                 </div>
 
                 <table>
@@ -182,15 +172,21 @@ $hasil = mysqli_stmt_get_result($stmt);
                                     <a class="icon-action" href="detail.php?id=<?php echo $row['id']; ?>" title="Lihat detail">
                                         <svg width="15" height="15" fill="none" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/></svg>
                                     </a>
-                                    <!-- Edit / Refresh -->
-                                    <a class="icon-action" href="detail.php?id=<?php echo $row['id']; ?>" title="Ubah status"
-                                       <?php if ($row['status'] === 'selesai') echo 'style="opacity:.35;pointer-events:none;"'; ?>>
-                                        <svg width="15" height="15" fill="none" viewBox="0 0 24 24"><path d="M4 4v5h5M20 20v-5h-5M4 9a9 9 0 0114.9-3.4M20 15A9 9 0 015.1 18.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                                    <!-- Download -->
+                                    <a class="icon-action" href="laporan_cetak.php?id=<?php echo $row['id']; ?>" target="_blank" title="Download / Cetak PDF" style="color: #6366f1; border-color: #c7d2fe; background: #eef2ff;">
+                                        <svg width="15" height="15" fill="none" viewBox="0 0 24 24"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                     </a>
                                     <!-- Approve -->
-                                    <a class="icon-action approve" href="detail.php?id=<?php echo $row['id']; ?>" title="Selesaikan"
-                                       <?php if ($row['status'] === 'selesai') echo 'style="opacity:.35;pointer-events:none;"'; ?>>
+                                    <a class="icon-action approve" href="update_status.php?id=<?php echo $row['id']; ?>&status=selesai" title="Selesaikan"
+                                       onclick="return confirm('Selesaikan pengajuan ini?')"
+                                       <?php if ($row['status'] === 'selesai' || $row['status'] === 'ditolak') echo 'style="opacity:.35;pointer-events:none;"'; ?>>
                                         <svg width="15" height="15" fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </a>
+                                    <!-- Reject -->
+                                    <a class="icon-action" href="#" title="Tolak Pengajuan" 
+                                       style="color: #ef4444; border-color: #fca5a5; background: #fef2f2; <?php if ($row['status'] === 'selesai' || $row['status'] === 'ditolak') echo 'opacity:.35;pointer-events:none;'; ?>"
+                                       onclick="const msg = prompt('Alasan penolakan:'); if(msg) window.location.href='update_status.php?id=<?php echo $row['id']; ?>&status=ditolak&keterangan=' + encodeURIComponent(msg); return false;">
+                                        <svg width="15" height="15" fill="none" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                     </a>
                                 </div>
                             </td>

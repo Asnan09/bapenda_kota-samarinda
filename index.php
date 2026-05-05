@@ -113,8 +113,8 @@
 
     <footer class="site-footer">
         <div>
-            <h3>BAPENDA SAMARINDA</h3>
-            <p>Portal layanan administrasi perpajakan daerah yang mudah dan transparan.</p>
+            <h3>SIAP-PBB</h3>
+            <p>Sistem Informasi Akses Pajak PBB.</p>
         </div>
         <div class="footer-links">
             <a href="#">Kebijakan Privasi</a>

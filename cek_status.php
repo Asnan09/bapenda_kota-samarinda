@@ -4,7 +4,7 @@
 include "koneksi.php";
 
 $data_pengajuan = [];
-$query = "SELECT id, nik, nama, jenis_surat, status, tanggal FROM pengajuan ORDER BY tanggal DESC";
+$query = "SELECT id, nik, nama, jenis_surat, status, keterangan, tanggal FROM pengajuan ORDER BY tanggal DESC";
 $hasil = mysqli_query($koneksi, $query);
 
 if ($hasil) {
@@ -88,11 +88,15 @@ if ($hasil) {
                                 <td style="padding: 16px; font-size: 13.5px; color: #1a2744; border-bottom: 1px solid #e2e8f3;"><?php echo date("d M Y", strtotime($pengajuan['tanggal'])); ?></td>
                                 <td style="padding: 16px; border-bottom: 1px solid #e2e8f3;">
                                     <?php 
-                                        $status = strtolower($pengajuan['status']);
                                         if ($status == 'selesai') {
                                             echo '<span style="display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: #dcfce7; color: #16a34a;">SELESAI</span>';
                                         } elseif ($status == 'ditolak') {
                                             echo '<span style="display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: #fee2e2; color: #dc2626;">DITOLAK</span>';
+                                            if (!empty($pengajuan['keterangan'])) {
+                                                echo '<div style="margin-top: 8px; font-size: 12px; color: #dc2626; background: #fff1f1; padding: 8px; border-radius: 6px; border-left: 3px solid #dc2626; max-width: 200px;">
+                                                        <strong>Alasan:</strong><br>' . htmlspecialchars($pengajuan['keterangan']) . '
+                                                      </div>';
+                                            }
                                         } else {
                                             echo '<span style="display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: #fff1e8; color: #ea580c;">DIPROSES</span>';
                                         }
@@ -153,11 +157,15 @@ if ($hasil) {
                                 <td style="padding: 16px; font-size: 13.5px; color: #1a2744; border-bottom: 1px solid #e2e8f3;"><?php echo date("d M Y", strtotime($pengajuan['tanggal'])); ?></td>
                                 <td style="padding: 16px; border-bottom: 1px solid #e2e8f3;">
                                     <?php 
-                                        $status = strtolower($pengajuan['status']);
                                         if ($status == 'selesai') {
                                             echo '<span style="display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: #dcfce7; color: #16a34a;">SELESAI</span>';
                                         } elseif ($status == 'ditolak') {
                                             echo '<span style="display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: #fee2e2; color: #dc2626;">DITOLAK</span>';
+                                            if (!empty($pengajuan['keterangan'])) {
+                                                echo '<div style="margin-top: 8px; font-size: 12px; color: #dc2626; background: #fff1f1; padding: 8px; border-radius: 6px; border-left: 3px solid #dc2626; max-width: 200px;">
+                                                        <strong>Alasan:</strong><br>' . htmlspecialchars($pengajuan['keterangan']) . '
+                                                      </div>';
+                                            }
                                         } else {
                                             echo '<span style="display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: #fff1e8; color: #ea580c;">DIPROSES</span>';
                                         }

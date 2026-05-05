@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // admin/detail.php
 session_start();
 if (!isset($_SESSION['admin_id'])) {
@@ -75,7 +75,6 @@ $dokumen_pbb = [
             </a>
         </nav>
         <div class="sidebar-bottom">
-            <a href="#"><span class="nav-icon"><svg width="18" height="18" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 8h.01M12 12v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>Bantuan</a>
             <a class="sidebar-logout" href="logout.php"><span class="nav-icon"><svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Keluar</a>
         </div>
     </aside>
@@ -172,7 +171,11 @@ $dokumen_pbb = [
                             <option value="pending" <?php echo $data['status'] === 'pending' ? 'selected' : ''; ?>>Pending</option>
                             <option value="diproses" <?php echo $data['status'] === 'diproses' ? 'selected' : ''; ?>>Diproses</option>
                             <option value="selesai" <?php echo $data['status'] === 'selesai' ? 'selected' : ''; ?>>Selesai</option>
+                            <option value="ditolak" <?php echo $data['status'] === 'ditolak' ? 'selected' : ''; ?>>Ditolak</option>
                         </select>
+                    </label>
+                    <label style="margin-top: 15px; display: block;">Catatan / Alasan Penolakan
+                        <textarea name="keterangan" style="width: 100%; height: 80px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; margin-top: 5px; font-family: inherit;"><?php echo htmlspecialchars($data['keterangan'] ?? ''); ?></textarea>
                     </label>
                     <button type="submit">Simpan Status</button>
                 </form>

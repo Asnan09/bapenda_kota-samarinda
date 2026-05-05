@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // koneksi.php
 // Koneksi database MySQL untuk aplikasi Bapenda.
 
@@ -51,7 +51,7 @@ function kolom_ada($koneksi, $tabel, $kolom)
     $data = mysqli_fetch_assoc($hasil);
     mysqli_stmt_close($stmt);
 
-    return (int)($data['total'] ?? 0) > 0;
+    return (int) ($data['total'] ?? 0) > 0;
 }
 
 $bootstrap_flag = __DIR__ . DIRECTORY_SEPARATOR . '.schema_pbb_ready';
@@ -116,7 +116,7 @@ if (!file_exists($bootstrap_flag)) {
     }
 
     $jumlah_admin = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) AS total FROM admin"));
-    if ((int)($jumlah_admin['total'] ?? 0) === 0) {
+    if ((int) ($jumlah_admin['total'] ?? 0) === 0) {
         $username_default = 'admin';
         $password_hash = '$2y$10$kl/jpdvW9X0Rn54dl81kluQ5A5nydvBcYtXxrw8fhl0UGiA5T7ePG';
         $stmt_admin = mysqli_prepare($koneksi, "INSERT INTO admin (username, password) VALUES (?, ?)");
