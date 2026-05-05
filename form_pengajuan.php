@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // form_pengajuan.php
 // Form khusus pengajuan Pendaftaran Objek Pajak Baru PBB-P2.
 date_default_timezone_set('Asia/Makassar');
@@ -33,7 +33,7 @@ $dokumen_upload = [
     </div>
 
     <header class="navbar">
-        <div class="brand">BAPENDA SAMARINDA</div>
+        <div class="brand">SIAP-PBB</div>
         <nav>
             <a href="index.php">Beranda</a>
             <a href="layanan.php" class="active">Layanan</a>
@@ -41,12 +41,31 @@ $dokumen_upload = [
             <a href="index.php#lokasi">Lokasi</a>
             <a class="nav-button" href="admin/login.php">Login Admin</a>
         </nav>
+        <button class="menu-toggle" data-menu-toggle aria-label="Buka Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </header>
 
+    <div class="sidebar-backdrop"></div>
+    <aside class="sidebar">
+        <button class="close-btn" data-menu-close aria-label="Tutup Menu">&times;</button>
+        <nav>
+            <a href="index.php">Beranda</a>
+            <a href="layanan.php" class="active">Layanan</a>
+            <a href="cek_status.php">Cek Status</a>
+            <a href="index.php#lokasi">Lokasi</a>
+            <a class="nav-button" href="admin/login.php">Login Admin</a>
+        </nav>
+    </aside>
+
     <main class="container">
-        <p class="label">Formulir Elektronik PBB-P2</p>
-        <h1>Pengajuan Pendaftaran Objek Pajak Baru PBB-P2</h1>
-        <p class="page-subtitle">Silakan lengkapi data wajib pajak dan unggah seluruh berkas yang diperlukan. Tanggal pengajuan akan terisi otomatis mengikuti waktu saat masyarakat mengirim formulir.</p>
+        <header class="form-header">
+            <p class="label">Layanan Elektronik</p>
+            <h1>Pengajuan PBB-P2 Baru</h1>
+            <p class="page-subtitle">Lengkapi formulir di bawah ini dengan data yang valid. Pastikan berkas yang diunggah terbaca dengan jelas untuk mempercepat proses verifikasi.</p>
+        </header>
 
         <?php if (isset($_GET['error'])): ?>
             <div class="alert error"><?php echo htmlspecialchars($_GET['error']); ?></div>
@@ -57,7 +76,10 @@ $dokumen_upload = [
                 <input type="hidden" name="jenis_surat" value="<?php echo htmlspecialchars($jenis_surat); ?>">
 
                 <section class="form-panel">
-                    <h2><span class="icon-box">ID</span> Data Wajib Pajak</h2>
+                    <div class="panel-header">
+                        <span class="icon-box">01</span>
+                        <h2>Data Diri Wajib Pajak</h2>
+                    </div>
                     <div class="form-grid">
                         <label>Nama Wajib Pajak
                             <input type="text" name="nama" placeholder="Masukkan nama wajib pajak" required>
@@ -102,18 +124,21 @@ $dokumen_upload = [
                 </section>
 
                 <section class="form-panel">
-                    <h2><span class="icon-box">UP</span> Unggah Dokumen Pendukung</h2>
-                    <div class="upload-grid upload-grid-pbb">
+                    <div class="panel-header">
+                        <span class="icon-box">02</span>
+                        <h2>Dokumen Pendukung</h2>
+                    </div>
+                    <div class="simple-upload-list">
                         <?php foreach ($dokumen_upload as $dokumen): ?>
-                            <label class="upload-card-label"><?php echo htmlspecialchars($dokumen['title']); ?>
-                                <span class="upload-box upload-box-rich">
-                                    <strong>Pilih file</strong>
-                                    <span><?php echo htmlspecialchars($dokumen['desc']); ?></span>
-                                    <small>Maksimal 2MB • JPG / PNG / PDF</small>
-                                    <em data-file-label>Belum ada file dipilih</em>
-                                </span>
-                                <input type="file" name="<?php echo htmlspecialchars($dokumen['name']); ?>" accept=".jpg,.jpeg,.png,.pdf" <?php echo in_array($dokumen['name'], ['file_titik_koordinat','file_surat_kuasa','file_sppdt_pembanding','file_akta_ahli_waris','file_surat_beda_nama'], true) ? '' : 'required'; ?>>
-                            </label>
+                            <div class="upload-item">
+                                <div class="upload-info">
+                                    <strong><?php echo htmlspecialchars($dokumen['title']); ?></strong>
+                                    <p><?php echo htmlspecialchars($dokumen['desc']); ?></p>
+                                </div>
+                                <div class="upload-control">
+                                    <input type="file" name="<?php echo htmlspecialchars($dokumen['name']); ?>" accept=".jpg,.jpeg,.png,.pdf" <?php echo in_array($dokumen['name'], ['file_titik_koordinat','file_surat_kuasa','file_sppdt_pembanding','file_akta_ahli_waris','file_surat_beda_nama'], true) ? '' : 'required'; ?>>
+                                </div>
+                            </div>
                         <?php endforeach; ?>
                     </div>
                 </section>
@@ -123,32 +148,27 @@ $dokumen_upload = [
 
             <aside class="info-column">
                 <section class="important-card">
-                    <h2>Informasi Penting</h2>
-                    <p>Form ini khusus untuk <strong><?php echo htmlspecialchars($jenis_surat); ?></strong>.</p>
-                    <p>Pastikan data kelurahan, kecamatan, dan alamat objek pajak ditulis lengkap agar verifikasi lebih cepat.</p>
-                    <p>Berkas nomor 6 sampai 10 bersifat kondisional. Unggah jika memang sesuai kondisi objek pajak Anda.</p>
-                </section>
-
-                <section class="help-card checklist-card">
-                    <h3>Checklist Berkas</h3>
-                    <ol>
-                        <li>KTP / NPWP Badan</li>
-                        <li>Blangko SPOP / SLOP</li>
-                        <li>Surat Pernyataan Bermaterai</li>
-                        <li>Dokumen legalisir tanah</li>
-                        <li>Foto lokasi tanah &amp; bangunan</li>
-                        <li>Titik koordinat bila belum ada tikor</li>
-                        <li>Surat kuasa bila diwakilkan</li>
-                        <li>SPPDT-P2 pembanding bila ada</li>
-                        <li>Akta kematian / ahli waris bila diperlukan</li>
-                        <li>Surat beda nama dari kelurahan bila diperlukan</li>
-                    </ol>
+                    <h3>Panduan Pengisian</h3>
+                    <p>Gunakan data sesuai KTP dan Sertifikat asli.</p>
+                    <ul class="simple-list">
+                        <li>Pastikan NIK/NPWP berjumlah 15-16 digit.</li>
+                        <li>Alamat objek pajak harus detail (RT/RW/No Rumah).</li>
+                        <li>Format file: JPG, PNG, atau PDF.</li>
+                        <li>Ukuran maksimal file 2MB.</li>
+                    </ul>
                 </section>
 
                 <section class="help-card">
                     <h3>Butuh Bantuan?</h3>
-                    <p><strong>Telepon</strong><br>(0541) 735511</p>
-                    <p><strong>Kantor</strong><br>Jl. Dahlia No. 1, Samarinda</p>
+                    <p>Hubungi layanan bantuan kami jika Anda mengalami kesulitan:</p>
+                    <div class="contact-item">
+                        <strong>WhatsApp / Telp</strong>
+                        <span>(0541) 735511</span>
+                    </div>
+                    <div class="contact-item">
+                        <strong>Alamat Kantor</strong>
+                        <span>Jl. Kesuma Bangsa No. 86, Samarinda</span>
+                    </div>
                 </section>
             </aside>
         </div>

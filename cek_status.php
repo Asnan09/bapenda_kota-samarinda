@@ -23,7 +23,7 @@ if ($hasil) {
 </head>
 <body>
     <header class="navbar">
-        <div class="brand">BAPENDA SAMARINDA</div>
+        <div class="brand">SIAP-PBB</div>
         <nav>
             <a href="index.php">Beranda</a>
             <a href="layanan.php">Layanan</a>
@@ -31,7 +31,24 @@ if ($hasil) {
             <a href="index.php#lokasi">Lokasi</a>
             <a class="nav-button" href="admin/login.php">Login Admin</a>
         </nav>
+        <button class="menu-toggle" data-menu-toggle aria-label="Buka Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </header>
+
+    <div class="sidebar-backdrop"></div>
+    <aside class="sidebar">
+        <button class="close-btn" data-menu-close aria-label="Tutup Menu">&times;</button>
+        <nav>
+            <a href="index.php">Beranda</a>
+            <a href="layanan.php">Layanan</a>
+            <a href="cek_status.php" class="active">Cek Status</a>
+            <a href="index.php#lokasi">Lokasi</a>
+            <a class="nav-button" href="admin/login.php">Login Admin</a>
+        </nav>
+    </aside>
 
     <main class="container narrow">
         <h1>Cek Status Pengajuan</h1>

@@ -1,4 +1,4 @@
-﻿/* assets/css/style.css */
+/* assets/css/style.css */
 /* Tampilan publik Bapenda Samarinda tanpa framework. */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
@@ -116,11 +116,111 @@ body.page-leaving {
     width: 100%;
 }
 
+@media (max-width: 1024px) {
+    .navbar nav {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+    
+    .navbar {
+        padding: 0 5%;
+    }
+}
+
 .nav-button {
     padding: 14px 26px;
     color: #ffffff !important;
     background: var(--navy);
     border-radius: 10px;
+}
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.menu-toggle span {
+    width: 28px;
+    height: 3px;
+    background: var(--navy-dark);
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+/* Sidebar / Mobile Menu */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 300px;
+    height: 100vh;
+    background: #ffffff;
+    z-index: 1000;
+    padding: 60px 30px;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sidebar.open {
+    right: 0;
+}
+
+.sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 27, 61, 0.4);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+}
+
+.sidebar-backdrop.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.sidebar .close-btn {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--muted);
+    margin-bottom: 20px;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.sidebar nav a {
+    font-size: 18px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--navy-dark);
+    font-weight: 600;
+}
+
+.sidebar .nav-button {
+    text-align: center;
+    margin-top: 20px;
 }
 
 .hero {
@@ -428,15 +528,36 @@ button:active,
 .result-card,
 .form-card {
     padding: 34px;
-    background: #edf1f5;
-    border-radius: 18px;
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 43, 91, 0.03);
+}
+
+.form-header {
+    margin-bottom: 40px;
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.panel-header h2 {
+    margin: 0;
+    color: var(--navy-dark);
+    font-size: 20px;
 }
 
 .form-panel h2 {
     display: flex;
     align-items: center;
     gap: 14px;
-    margin: 0 0 30px;
+    margin: 0;
     color: var(--navy-dark);
 }
 
@@ -457,20 +578,29 @@ input,
 textarea,
 select {
     width: 100%;
-    border: 0;
-    border-radius: 10px;
-    padding: 17px 20px;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    padding: 14px 18px;
     color: #111827;
-    background: #ffffff;
-    font-size: 16px;
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    background: #f9fafb;
+    font-size: 15px;
+    font-family: inherit;
+    transition: all 0.2s ease;
 }
 
 input:focus,
 textarea:focus,
 select:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 43, 91, 0.14);
+    background: #ffffff;
+    border-color: var(--navy);
+    box-shadow: 0 0 0 4px rgba(0, 43, 91, 0.08);
+}
+
+input[readonly] {
+    background: #f3f4f6;
+    border-color: #e5e7eb;
+    cursor: not-allowed;
 }
 
 .upload-box {
@@ -508,6 +638,34 @@ select:focus {
     line-height: 1.7;
 }
 
+.simple-list {
+    margin: 14px 0 0;
+    padding-left: 20px;
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+.simple-list li {
+    margin-bottom: 8px;
+}
+
+.contact-item {
+    margin-top: 18px;
+    display: grid;
+    gap: 4px;
+}
+
+.contact-item strong {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.contact-item span {
+    font-weight: 700;
+    color: var(--navy-dark);
+}
+
 .help-card {
     margin-top: 28px;
 }
@@ -528,63 +686,84 @@ select:focus {
     background: #fee2e2;
 }
 
-@media (max-width: 900px) {
-    .hero,
-    .split-section,
-    .submission-layout,
-    .form-grid,
-    .map-section {
+@media (max-width: 1024px) {
+    .navbar nav {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+    
+    .navbar {
+        padding: 0 5%;
+    }
+
+    .hero {
+        padding: 60px 5% 80px;
         grid-template-columns: 1fr;
+        text-align: center;
+        gap: 40px;
+    }
+
+    .hero-content h1 {
+        margin: 18px auto;
+        font-size: 42px;
+    }
+
+    .hero-content p {
+        margin: 0 auto;
+    }
+
+    .submission-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .info-column {
+        order: -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .container, .split-section {
+        margin: 40px auto;
+    }
+
+    .split-section {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
     }
 
     .service-grid {
         grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .three-cols {
+        grid-template-columns: 1fr;
     }
 }
 
-@keyframes pageFadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes fadeUp {
-    from {
-        opacity: 0;
-        transform: translateY(26px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes loaderPulse {
-    0%,
-    100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.08);
-    }
-}
-
-@media (max-width: 640px) {
-    .navbar,
-    .site-footer {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
+@media (max-width: 480px) {
     .hero-content h1 {
-        font-size: 36px;
+        font-size: 32px;
     }
 
     .service-grid {
         grid-template-columns: 1fr;
+    }
+
+    .navbar .brand {
+        font-size: 20px;
+    }
+
+    .form-panel, .important-card, .help-card {
+        padding: 24px;
     }
 }
 
@@ -632,58 +811,59 @@ select:focus {
     grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.upload-grid-pbb {
+.simple-upload-list {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 22px;
+    gap: 16px;
 }
 
-.upload-card-label {
-    position: relative;
-    margin-bottom: 0;
-}
-
-.upload-card-label input[type="file"] {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    opacity: 0;
-    pointer-events: none;
-}
-
-.upload-box-rich {
+.upload-item {
+    display: grid;
+    grid-template-columns: 1fr 280px;
     align-items: center;
-    gap: 8px;
-    min-height: 190px;
-    transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    gap: 20px;
+    padding: 16px;
+    background: #f9fafb;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    transition: all 0.2s ease;
 }
 
-.upload-box-rich strong {
-    color: var(--navy-dark);
-    font-size: 18px;
+.upload-item:hover {
+    background: #ffffff;
+    border-color: var(--navy);
+    box-shadow: 0 4px 12px rgba(0, 43, 91, 0.05);
 }
 
-.upload-box-rich span {
-    color: #475569;
+.upload-info strong {
+    display: block;
     font-size: 14px;
-    line-height: 1.6;
+    color: var(--navy-dark);
+    margin-bottom: 4px;
 }
 
-.upload-box-rich em {
-    display: inline-flex;
-    width: 100%;
-    justify-content: center;
-    color: var(--navy);
+.upload-info p {
+    margin: 0;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.4;
+}
+
+.upload-control input[type="file"] {
+    padding: 8px;
     font-size: 13px;
-    font-style: normal;
-    font-weight: 700;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
 }
 
-.upload-card-label:hover .upload-box-rich,
-.upload-card-label:focus-within .upload-box-rich {
-    border-color: rgba(0, 43, 91, 0.35);
-    box-shadow: 0 18px 35px rgba(0, 27, 61, 0.08);
-    transform: translateY(-2px);
+@media (max-width: 768px) {
+    .upload-item {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .upload-control {
+        width: 100%;
+    }
 }
 
 .checklist-card ol {
@@ -730,6 +910,36 @@ select:focus {
     .three-cols,
     .upload-grid-pbb {
         grid-template-columns: 1fr;
+    }
+}
+
+@keyframes pageFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(26px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes loaderPulse {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.08);
     }
 }
 
