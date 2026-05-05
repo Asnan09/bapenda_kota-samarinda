@@ -14,7 +14,7 @@
 
 <body>
     <header class="navbar">
-        <div class="brand">BAPENDA SAMARINDA</div>
+        <div class="brand">SIAP-PBB</div>
         <nav>
             <a href="index.php" class="active">Beranda</a>
             <a href="layanan.php">Layanan</a>
