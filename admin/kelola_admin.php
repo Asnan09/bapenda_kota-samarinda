@@ -22,7 +22,7 @@ $hasil_admin = mysqli_query($koneksi, $query_admin);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kelola Admin — Bapenda Samarinda</title>
+    <title>Kelola Admin — SIAP-PBB</title>
     <link rel="stylesheet" href="../assets/css/admin.css?v=10">
     <style>
         /* Modal Styles */
@@ -82,7 +82,7 @@ $hasil_admin = mysqli_query($koneksi, $query_admin);
         <div class="sidebar-brand">
             <span class="brand-mark">B</span>
             <strong>Admin Portal</strong>
-            <span>Bapenda Samarinda</span>
+            <span>SIAP-PBB Samarinda</span>
         </div>
         <nav>
             <a href="dashboard.php">
@@ -110,7 +110,7 @@ $hasil_admin = mysqli_query($koneksi, $query_admin);
         <header class="dashboard-top">
             <div>
                 <h1>Kelola Admin</h1>
-                <p>Manajemen akun administrator sistem Bapenda</p>
+                <p>Manajemen akun administrator sistem SIAP-PBB</p>
             </div>
             <div class="admin-profile" title="<?php echo htmlspecialchars($admin_username); ?>">
                 <div class="admin-avatar"><?php echo htmlspecialchars($admin_initial); ?></div>

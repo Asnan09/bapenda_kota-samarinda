@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Layanan Surat Online Bapenda Samarinda</title>
+    <title>Layanan Surat Online SIAP-PBB</title>
     <link rel="stylesheet" href="assets/css/style.css?v=7">
 </head>
 
@@ -49,12 +49,12 @@
                 status pengajuan dengan aman.</p>
         </section>
         <section class="hero-image" aria-label="Ilustrasi layanan digital">
-            <div class="image-placeholder">BAPENDA<br>SAMARINDA</div>
+            <div class="image-placeholder">SIAP-PBB</div>
         </section>
     </main>
 
     <section class="split-section">
-        <div class="office-photo">Kantor Bapenda</div>
+        <div class="office-photo">Kantor SIAP-PBB</div>
         <div>
             <h2>Membayar Pajak Membangun Samarinda</h2>
             <p>Badan Pendapatan Daerah Kota Samarinda berkomitmen untuk meningkatkan pelayanan pajak daerah secara
@@ -98,7 +98,7 @@
     </section>
 
     <section class="map-section" id="lokasi">
-        <iframe class="map-frame" title="Lokasi Bapenda Samarinda"
+        <iframe class="map-frame" title="Lokasi SIAP-PBB"
             src="https://www.google.com/maps?q=Bapenda%20Samarinda&output=embed" loading="lazy"
             referrerpolicy="no-referrer-when-downgrade">
         </iframe>

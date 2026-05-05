@@ -1,0 +1,19 @@
+# Ignore uploaded files
+uploads/
+
+# Ignore logs and temp files
+*.log
+*.tmp
+temp/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Database files (keep the schema, ignore backups if any)
+# bapenda.sql (Keep this if you want to track the schema)
+
+# IDE / Gemini files
+.gemini/
+.vscode/
+.idea/

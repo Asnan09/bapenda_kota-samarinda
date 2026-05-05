@@ -78,7 +78,7 @@ $hasil = mysqli_query($koneksi, $query);
     <div style="margin-top: 50px; text-align: right;">
         <p>Samarinda, <?php echo date('d F Y'); ?></p>
         <br><br><br>
-        <p><strong>Administrator Bapenda</strong></p>
+        <p><strong>Administrator SIAP-PBB</strong></p>
     </div>
 
     <div class="no-print" style="margin-top: 30px; text-align: center;">

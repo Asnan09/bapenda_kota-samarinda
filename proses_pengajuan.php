@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // proses_pengajuan.php
 // Menyimpan pengajuan Pendaftaran Objek Pajak Baru PBB-P2 beserta 10 berkas pendukung.
 include "koneksi.php";
@@ -7,6 +7,7 @@ date_default_timezone_set('Asia/Makassar');
 
 function redirect_dengan_error($pesan)
 {
+    $_SESSION['old_input'] = $_POST;
     header("Location: form_pengajuan.php?error=" . urlencode($pesan));
     exit;
 }
@@ -172,6 +173,7 @@ if (!mysqli_stmt_execute($stmt_berkas)) {
     redirect_dengan_error('Pengajuan tersimpan, tetapi data berkas gagal dicatat.');
 }
 
+unset($_SESSION['old_input']);
 header('Location: cek_status.php?sukses=' . $pengajuan_id);
 exit;
 ?>

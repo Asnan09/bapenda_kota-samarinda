@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // admin/dashboard.php
 session_start();
 if (!isset($_SESSION['admin_id'])) {
@@ -69,7 +69,7 @@ $bulan_array = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Admin — Bapenda Samarinda</title>
+    <title>Dashboard Admin — SIAP-PBB</title>
     <link rel="stylesheet" href="../assets/css/admin.css?v=10">
 </head>
 <body class="dashboard-page">
@@ -91,7 +91,7 @@ $bulan_array = [
         <div class="sidebar-brand">
             <span class="brand-mark">B</span>
             <strong>Admin Portal</strong>
-            <span>Bapenda Samarinda</span>
+            <span>SIAP-PBB Samarinda</span>
         </div>
         <nav>
             <a class="active" href="dashboard.php">
@@ -234,7 +234,7 @@ $bulan_array = [
         <!-- Footer -->
         <footer class="dashboard-footer">
             <div class="footer-brand">
-                <strong>BAPENDA SAMARINDA</strong>
+                <strong>SIAP-PBB</strong>
                 <span>© 2024 Badan Pendapatan Daerah Kota Samarinda. Hak Cipta Dilindungi.</span>
             </div>
             <div class="footer-links">

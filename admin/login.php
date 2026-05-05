@@ -8,7 +8,7 @@ if (isset($_SESSION['admin_id'])) { header("Location: dashboard.php"); exit; }
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Admin - Bapenda Samarinda</title>
+    <title>Login Admin - SIAP-PBB</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/admin.css?v=10">
 </head>
@@ -26,7 +26,7 @@ if (isset($_SESSION['admin_id'])) { header("Location: dashboard.php"); exit; }
                     <svg width="32" height="32" fill="none" viewBox="0 0 24 24"><path fill="var(--blue)" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 </div>
                 <h1>Admin<span class="text-blue">Portal</span></h1>
-                <p>BAPENDA KOTA SAMARINDA</p>
+                <p>SIAP-PBB KOTA SAMARINDA</p>
             </div>
 
             <?php if (isset($_GET['error'])): ?>
@@ -57,7 +57,7 @@ if (isset($_SESSION['admin_id'])) { header("Location: dashboard.php"); exit; }
             </form>
 
             <div class="login-footer">
-                @ 2024 SISTEM INFORMASI BAPENDA
+                @ 2024 SISTEM INFORMASI SIAP-PBB
             </div>
         </main>
     </div>

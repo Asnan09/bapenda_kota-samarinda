@@ -1,9 +1,11 @@
 <?php
 // form_pengajuan.php
 // Form khusus pengajuan Pendaftaran Objek Pajak Baru PBB-P2.
+session_start();
 date_default_timezone_set('Asia/Makassar');
 $tanggal_otomatis = date('d F Y');
-$jenis_surat = 'Pendaftaran Objek Pajak Baru PBB-P2';
+$jenis_surat = $_GET['layanan'] ?? 'Pendaftaran Objek Pajak Baru PBB-P2';
+$old = $_SESSION['old_input'] ?? [];
 
 $dokumen_upload = [
     ['name' => 'file_ktp', 'title' => '1. Fotokopi KTP / NPWP Badan', 'desc' => 'Wajib diunggah dalam format JPG, PNG, atau PDF.'],
@@ -20,12 +22,14 @@ $dokumen_upload = [
 ?>
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Pengajuan PBB-P2</title>
     <link rel="stylesheet" href="assets/css/style.css?v=8">
 </head>
+
 <body>
     <div class="page-loader" id="pageLoader">
         <div class="loader-mark">B</div>
@@ -63,8 +67,9 @@ $dokumen_upload = [
     <main class="container">
         <header class="form-header">
             <p class="label">Layanan Elektronik</p>
-            <h1>Pengajuan PBB-P2 Baru</h1>
-            <p class="page-subtitle">Lengkapi formulir di bawah ini dengan data yang valid. Pastikan berkas yang diunggah terbaca dengan jelas untuk mempercepat proses verifikasi.</p>
+            <h1><?php echo htmlspecialchars($jenis_surat); ?></h1>
+            <p class="page-subtitle">Lengkapi formulir di bawah ini dengan data yang valid. Pastikan berkas yang
+                diunggah terbaca dengan jelas untuk mempercepat proses verifikasi.</p>
         </header>
 
         <?php if (isset($_GET['error'])): ?>
@@ -72,27 +77,31 @@ $dokumen_upload = [
         <?php endif; ?>
 
         <div class="submission-layout pbb-layout">
-            <form class="submission-form" action="proses_pengajuan.php" method="POST" enctype="multipart/form-data" id="formPengajuan">
+            <form class="submission-form" action="proses_pengajuan.php" method="POST" enctype="multipart/form-data"
+                id="formPengajuan">
                 <input type="hidden" name="jenis_surat" value="<?php echo htmlspecialchars($jenis_surat); ?>">
 
                 <section class="form-panel">
                     <div class="panel-header">
                         <span class="icon-box">01</span>
-                        <h2>Data Diri Wajib Pajak</h2>
+                        <h2>Data Diri Pemohon</h2>
                     </div>
                     <div class="form-grid">
-                        <label>Nama Wajib Pajak
-                            <input type="text" name="nama" placeholder="Masukkan nama wajib pajak" required>
+                        <label>Nama Pemohon
+                            <input type="text" name="nama" placeholder="Masukkan nama Pemohon"
+                                value="<?php echo htmlspecialchars($old['nama'] ?? ''); ?>" required>
                         </label>
 
                         <label>NIK / NPWP
-                            <input type="text" name="nik" inputmode="numeric" placeholder="15-16 digit NIK atau NPWP" required>
+                            <input type="text" name="nik" inputmode="numeric" placeholder="15-16 digit NIK atau NPWP"
+                                value="<?php echo htmlspecialchars($old['nik'] ?? ''); ?>" required>
                         </label>
                     </div>
 
                     <div class="form-grid">
                         <label>Tanggal Pengajuan
-                            <input type="text" name="tanggal_tampil" value="<?php echo htmlspecialchars($tanggal_otomatis); ?>" readonly>
+                            <input type="text" name="tanggal_tampil"
+                                value="<?php echo htmlspecialchars($tanggal_otomatis); ?>" readonly>
                         </label>
 
                         <label>Kota
@@ -100,25 +109,30 @@ $dokumen_upload = [
                         </label>
                     </div>
 
-                    <label>Alamat Wajib Pajak
-                        <textarea name="alamat" rows="4" placeholder="Masukkan alamat sesuai identitas wajib pajak" required></textarea>
+                    <label>Alamat Pemohon
+                        <textarea name="alamat" rows="4" placeholder="Masukkan alamat sesuai identitas Pemohon"
+                            required><?php echo htmlspecialchars($old['alamat'] ?? ''); ?></textarea>
                     </label>
 
                     <label>Alamat Objek Pajak
-                        <textarea name="alamat_objek_pajak" rows="4" placeholder="Masukkan alamat lengkap objek pajak" required></textarea>
+                        <textarea name="alamat_objek_pajak" rows="4" placeholder="Masukkan alamat lengkap objek pajak"
+                            required><?php echo htmlspecialchars($old['alamat_objek_pajak'] ?? ''); ?></textarea>
                     </label>
 
                     <div class="form-grid three-cols">
                         <label>Kelurahan
-                            <input type="text" name="kelurahan" placeholder="Contoh: Air Putih" required>
+                            <input type="text" name="kelurahan" placeholder="Contoh: Air Putih"
+                                value="<?php echo htmlspecialchars($old['kelurahan'] ?? ''); ?>" required>
                         </label>
 
                         <label>Kecamatan
-                            <input type="text" name="kecamatan" placeholder="Contoh: Samarinda Ulu" required>
+                            <input type="text" name="kecamatan" placeholder="Contoh: Samarinda Ulu"
+                                value="<?php echo htmlspecialchars($old['kecamatan'] ?? ''); ?>" required>
                         </label>
 
-                        <label>Nomor Telepon / HP / E-Mail
-                            <input type="text" name="no_hp" placeholder="08xxxx / email aktif" required>
+                        <label>Nomor Telepon
+                            <input type="text" name="no_hp" placeholder="08xxxxxxxx"
+                                value="<?php echo htmlspecialchars($old['no_hp'] ?? ''); ?>" required>
                         </label>
                     </div>
                 </section>
@@ -136,14 +150,15 @@ $dokumen_upload = [
                                     <p><?php echo htmlspecialchars($dokumen['desc']); ?></p>
                                 </div>
                                 <div class="upload-control">
-                                    <input type="file" name="<?php echo htmlspecialchars($dokumen['name']); ?>" accept=".jpg,.jpeg,.png,.pdf" <?php echo in_array($dokumen['name'], ['file_titik_koordinat','file_surat_kuasa','file_sppdt_pembanding','file_akta_ahli_waris','file_surat_beda_nama'], true) ? '' : 'required'; ?>>
+                                    <input type="file" name="<?php echo htmlspecialchars($dokumen['name']); ?>"
+                                        accept=".jpg,.jpeg,.png,.pdf" <?php echo in_array($dokumen['name'], ['file_titik_koordinat', 'file_surat_kuasa', 'file_sppdt_pembanding', 'file_akta_ahli_waris', 'file_surat_beda_nama'], true) ? '' : 'required'; ?>>
                                 </div>
                             </div>
                         <?php endforeach; ?>
                     </div>
                 </section>
-
-                <button class="btn primary submit-wide" type="submit">Kirim Pengajuan PBB-P2</button>
+                
+                <button class="btn primary submit-wide" type="submit">Kirim Pengajuan</button>
             </form>
 
             <aside class="info-column">
@@ -176,7 +191,7 @@ $dokumen_upload = [
 
     <footer class="site-footer">
         <div>
-            <h3>BAPENDA SAMARINDA</h3>
+            <h3>SIAP-PBB</h3>
             <p>Mewujudkan pelayanan perpajakan daerah yang modern dan transparan.</p>
         </div>
         <div class="footer-links">
@@ -189,4 +204,5 @@ $dokumen_upload = [
     <script src="assets/js/script.js?v=2"></script>
     <script src="assets/js/form.js?v=2"></script>
 </body>
+
 </html>

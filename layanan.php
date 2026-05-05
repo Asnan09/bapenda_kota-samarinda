@@ -59,14 +59,14 @@ $daftar_layanan = [
                     <span class="icon-box">DOC</span>
                     <h3><?php echo htmlspecialchars($layanan); ?></h3>
                     <p>Pengajuan dapat dilakukan secara online melalui formulir yang tersedia.</p>
-                    <a href="form_pengajuan.php">Ajukan</a>
+                    <a href="form_pengajuan.php?layanan=<?php echo urlencode($layanan); ?>">Ajukan</a>
                 </article>
             <?php endforeach; ?>
         </div>
     </main>
     <footer class="site-footer">
         <div>
-            <h3>BAPENDA SAMARINDA</h3>
+            <h3>SIAP-PBB</h3>
             <p>Layanan surat online yang terhubung dengan database bapenda.</p>
         </div>
     </footer>

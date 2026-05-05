@@ -88,6 +88,7 @@ if ($hasil) {
                                 <td style="padding: 16px; font-size: 13.5px; color: #1a2744; border-bottom: 1px solid #e2e8f3;"><?php echo date("d M Y", strtotime($pengajuan['tanggal'])); ?></td>
                                 <td style="padding: 16px; border-bottom: 1px solid #e2e8f3;">
                                     <?php 
+                                        $status = strtolower($pengajuan['status']);
                                         if ($status == 'selesai') {
                                             echo '<span style="display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: #dcfce7; color: #16a34a;">SELESAI</span>';
                                         } elseif ($status == 'ditolak') {
@@ -102,7 +103,12 @@ if ($hasil) {
                                         }
                                     ?>
                                 </td>
-                                <td style="padding: 16px; padding-right: 24px; text-align: center; border-bottom: 1px solid #e2e8f3;">
+                                <td style="padding: 16px; padding-right: 24px; text-align: center; border-bottom: 1px solid #e2e8f3; white-space: nowrap;">
+                                    <!-- Detail Button -->
+                                    <a href="detail_pengajuan.php?id=<?php echo $pengajuan['id']; ?>" style="display: inline-flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #e2e8f3; font-size: 15px; color: #6b7a99; text-decoration: none; width: 34px; height: 34px; border-radius: 8px; transition: all 0.2s; margin-right: 5px;" title="Lihat Detail" onmouseover="this.style.borderColor='#2563eb'; this.style.color='#2563eb';" onmouseout="this.style.borderColor='#e2e8f3'; this.style.color='#6b7a99';">
+                                        <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
+                                    </a>
+
                                     <?php if ($status == 'selesai'): ?>
                                         <a target="_blank" href="cetak_surat.php?id=<?php echo $pengajuan['id']; ?>" style="display: inline-flex; align-items: center; justify-content: center; background: #f0f2f7; border: 1px solid #e2e8f3; font-size: 15px; color: #6b7a99; text-decoration: none; width: 34px; height: 34px; border-radius: 8px; transition: all 0.2s;" title="Download Surat" onmouseover="this.style.background='#eff4ff'; this.style.color='#2563eb'; this.style.borderColor='#2563eb';" onmouseout="this.style.background='#f0f2f7'; this.style.color='#6b7a99'; this.style.borderColor='#e2e8f3';">
                                             <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -128,70 +134,7 @@ if ($hasil) {
             </div>
         </div>
 
-        <?php if (count($data_pengajuan) > 0): ?>
-            <div class="table-panel" style="margin-top: 40px; border-radius: 12px; border: 1px solid #e2e8f3; background: #fff; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); overflow: hidden;">
-                <div class="table-heading" style="padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e2e8f3;">
-                    <h2 style="font-size: 16px; font-weight: 700; color: #0f1f3d; margin: 0;">Hasil Cek Status Pengajuan</h2>
-                </div>
-                <div style="overflow-x: auto;">
-                    <table style="width: 100%; min-width: 860px; border-collapse: collapse; text-align: left;">
-                        <thead>
-                            <tr>
-                                <th style="background: #f0f2f7; padding: 12px 16px; padding-left: 24px; font-size: 11px; font-weight: 700; letter-spacing: .07em; color: #6b7a99; text-transform: uppercase; border-bottom: 1px solid #e2e8f3;">NO</th>
-                                <th style="background: #f0f2f7; padding: 12px 16px; font-size: 11px; font-weight: 700; letter-spacing: .07em; color: #6b7a99; text-transform: uppercase; border-bottom: 1px solid #e2e8f3;">NAMA PEMOHON</th>
-                                <th style="background: #f0f2f7; padding: 12px 16px; font-size: 11px; font-weight: 700; letter-spacing: .07em; color: #6b7a99; text-transform: uppercase; border-bottom: 1px solid #e2e8f3;">JENIS SURAT</th>
-                                <th style="background: #f0f2f7; padding: 12px 16px; font-size: 11px; font-weight: 700; letter-spacing: .07em; color: #6b7a99; text-transform: uppercase; border-bottom: 1px solid #e2e8f3;">TANGGAL MASUK</th>
-                                <th style="background: #f0f2f7; padding: 12px 16px; font-size: 11px; font-weight: 700; letter-spacing: .07em; color: #6b7a99; text-transform: uppercase; border-bottom: 1px solid #e2e8f3;">STATUS</th>
-                                <th style="background: #f0f2f7; padding: 12px 16px; padding-right: 24px; font-size: 11px; font-weight: 700; letter-spacing: .07em; color: #6b7a99; text-transform: uppercase; text-align: center; border-bottom: 1px solid #e2e8f3;">AKSI</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($data_pengajuan as $index => $pengajuan): ?>
-                            <tr>
-                                <td style="padding: 16px; padding-left: 24px; font-size: 13.5px; color: #6b7a99; font-weight: 600; border-bottom: 1px solid #e2e8f3;"><?php echo str_pad($index + 1, 2, '0', STR_PAD_LEFT); ?></td>
-                                <td style="padding: 16px; font-size: 13.5px; border-bottom: 1px solid #e2e8f3; line-height: 1.4;">
-                                    <strong style="font-weight: 700; color: #0f1f3d;"><?php echo htmlspecialchars($pengajuan['nama']); ?></strong><br>
-                                    <small style="font-size: 12px; color: #6b7a99;">NIK: <?php echo htmlspecialchars($pengajuan['nik']); ?></small>
-                                </td>
-                                <td style="padding: 16px; font-size: 13.5px; color: #1a2744; border-bottom: 1px solid #e2e8f3;"><?php echo htmlspecialchars($pengajuan['jenis_surat']); ?></td>
-                                <td style="padding: 16px; font-size: 13.5px; color: #1a2744; border-bottom: 1px solid #e2e8f3;"><?php echo date("d M Y", strtotime($pengajuan['tanggal'])); ?></td>
-                                <td style="padding: 16px; border-bottom: 1px solid #e2e8f3;">
-                                    <?php 
-                                        if ($status == 'selesai') {
-                                            echo '<span style="display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: #dcfce7; color: #16a34a;">SELESAI</span>';
-                                        } elseif ($status == 'ditolak') {
-                                            echo '<span style="display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: #fee2e2; color: #dc2626;">DITOLAK</span>';
-                                            if (!empty($pengajuan['keterangan'])) {
-                                                echo '<div style="margin-top: 8px; font-size: 12px; color: #dc2626; background: #fff1f1; padding: 8px; border-radius: 6px; border-left: 3px solid #dc2626; max-width: 200px;">
-                                                        <strong>Alasan:</strong><br>' . htmlspecialchars($pengajuan['keterangan']) . '
-                                                      </div>';
-                                            }
-                                        } else {
-                                            echo '<span style="display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: #fff1e8; color: #ea580c;">DIPROSES</span>';
-                                        }
-                                    ?>
-                                </td>
-                                <td style="padding: 16px; padding-right: 24px; text-align: center; border-bottom: 1px solid #e2e8f3;">
-                                    <?php if ($status == 'selesai'): ?>
-                                        <a target="_blank" href="cetak_surat.php?id=<?php echo $pengajuan['id']; ?>" style="display: inline-flex; align-items: center; justify-content: center; background: #f0f2f7; border: 1px solid #e2e8f3; font-size: 15px; color: #6b7a99; text-decoration: none; width: 34px; height: 34px; border-radius: 8px; transition: all 0.2s;" title="Download Surat" onmouseover="this.style.background='#eff4ff'; this.style.color='#2563eb'; this.style.borderColor='#2563eb';" onmouseout="this.style.background='#f0f2f7'; this.style.color='#6b7a99'; this.style.borderColor='#e2e8f3';">
-                                            <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                        </a>
-                                    <?php else: ?>
-                                        <span style="display: inline-flex; align-items: center; justify-content: center; background: #f0f2f7; border: 1px solid #e2e8f3; font-size: 15px; color: #6b7a99; width: 34px; height: 34px; border-radius: 8px; opacity: 0.35; cursor: not-allowed;" title="Belum tersedia">
-                                            <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                        </span>
-                                    <?php endif; ?>
-                                </td>
-                            </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-                <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; background: #fff;">
-                    <span style="font-size: 12.5px; color: #6b7a99;">Menampilkan <?php echo count($data_pengajuan); ?> data pengajuan</span>
-                </div>
-            </div>
-        <?php endif; ?>
+
     </main>
     <script src="assets/js/script.js?v=2"></script>
 </body>
