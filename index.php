@@ -4,12 +4,14 @@
 ?>
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Layanan Surat Online Bapenda Samarinda</title>
     <link rel="stylesheet" href="assets/css/style.css?v=7">
 </head>
+
 <body>
     <header class="navbar">
         <div class="brand">BAPENDA SAMARINDA</div>
@@ -26,7 +28,8 @@
         <section class="hero-content">
             <p class="label">Pelayanan Publik Modern</p>
             <h1>Layanan Surat Online Badan Pendapatan Daerah Kota Samarinda</h1>
-            <p>Transformasi digital pelayanan pajak daerah. Ajukan berbagai kebutuhan administrasi perpajakan dan pantau status pengajuan dengan aman.</p>
+            <p>Transformasi digital pelayanan pajak daerah. Ajukan berbagai kebutuhan administrasi perpajakan dan pantau
+                status pengajuan dengan aman.</p>
         </section>
         <section class="hero-image" aria-label="Ilustrasi layanan digital">
             <div class="image-placeholder">BAPENDA<br>SAMARINDA</div>
@@ -36,8 +39,9 @@
     <section class="split-section">
         <div class="office-photo">Kantor Bapenda</div>
         <div>
-            <h2>Membangun Samarinda Melalui Kemandirian Fiskal</h2>
-            <p>Badan Pendapatan Daerah Kota Samarinda berkomitmen untuk meningkatkan pelayanan pajak daerah secara transparan, cepat, dan akuntabel.</p>
+            <h2>Membayar Pajak Membangun Samarinda</h2>
+            <p>Badan Pendapatan Daerah Kota Samarinda berkomitmen untuk meningkatkan pelayanan pajak daerah secara
+                transparan, cepat, dan akuntabel.</p>
             <p>Melalui platform digital ini, masyarakat dapat mengirim pengajuan layanan tanpa proses yang berbelit.</p>
         </div>
     </section>
@@ -48,21 +52,37 @@
             <p>Pilih jenis layanan surat yang Anda butuhkan.</p>
         </div>
         <div class="service-grid">
-            <article class="card"><span class="icon-box">NEW</span><h3>Pendaftaran Objek Baru</h3><p>Layanan pendaftaran Objek Pajak Baru PBB-P2.</p><a href="form_pengajuan.php">Ajukan</a></article>
-            <article class="card"><span class="icon-box">MUT</span><h3>Mutasi / Pembetulan</h3><p>Permohonan Mutasi atau Pembetulan Subjek/Objek Pajak PBB-P2.</p><a href="form_pengajuan.php">Ajukan</a></article>
-            <article class="card"><span class="icon-box">PCH</span><h3>Pemecahan Objek</h3><p>Layanan Pemecahan Subjek/Objek (Objek Pajak Data Baru).</p><a href="form_pengajuan.php">Ajukan</a></article>
-            <article class="card"><span class="icon-box">KBR</span><h3>Keberatan Pajak</h3><p>Permohonan Keberatan Subjek / Objek Pajak SPPDT PBB-P2.</p><a href="form_pengajuan.php">Ajukan</a></article>
-            <article class="card"><span class="icon-box">HPS</span><h3>Penghapusan SPPT</h3><p>Layanan Penghapusan Subjek/Objek Pajak SPPT PBB-P2.</p><a href="form_pengajuan.php">Ajukan</a></article>
-            <article class="card"><span class="icon-box">GAB</span><h3>Penggabungan Objek</h3><p>Permohonan Penggabungan Subjek/Objek Pajak SPPT PBB-P2.</p><a href="form_pengajuan.php">Ajukan</a></article>
+            <article class="card"><span class="icon-box">NEW</span>
+                <h3>Pendaftaran Objek Baru</h3>
+                <p>Layanan pendaftaran Objek Pajak Baru PBB-P2.</p><a href="form_pengajuan.php">Ajukan</a>
+            </article>
+            <article class="card"><span class="icon-box">MUT</span>
+                <h3>Mutasi / Pembetulan</h3>
+                <p>Permohonan Mutasi atau Pembetulan Subjek/Objek Pajak PBB-P2.</p><a
+                    href="form_pengajuan.php">Ajukan</a>
+            </article>
+            <article class="card"><span class="icon-box">PCH</span>
+                <h3>Pemecahan Objek</h3>
+                <p>Layanan Pemecahan Subjek/Objek (Objek Pajak Data Baru).</p><a href="form_pengajuan.php">Ajukan</a>
+            </article>
+            <article class="card"><span class="icon-box">KBR</span>
+                <h3>Keberatan Pajak</h3>
+                <p>Permohonan Keberatan Subjek / Objek Pajak SPPDT PBB-P2.</p><a href="form_pengajuan.php">Ajukan</a>
+            </article>
+            <article class="card"><span class="icon-box">HPS</span>
+                <h3>Penghapusan SPPT</h3>
+                <p>Layanan Penghapusan Subjek/Objek Pajak SPPT PBB-P2.</p><a href="form_pengajuan.php">Ajukan</a>
+            </article>
+            <article class="card"><span class="icon-box">GAB</span>
+                <h3>Penggabungan Objek</h3>
+                <p>Permohonan Penggabungan Subjek/Objek Pajak SPPT PBB-P2.</p><a href="form_pengajuan.php">Ajukan</a>
+            </article>
         </div>
     </section>
 
     <section class="map-section" id="lokasi">
-        <iframe
-            class="map-frame"
-            title="Lokasi Bapenda Samarinda"
-            src="https://www.google.com/maps?q=Bapenda%20Samarinda&output=embed"
-            loading="lazy"
+        <iframe class="map-frame" title="Lokasi Bapenda Samarinda"
+            src="https://www.google.com/maps?q=Bapenda%20Samarinda&output=embed" loading="lazy"
             referrerpolicy="no-referrer-when-downgrade">
         </iframe>
         <div class="location-card">
@@ -87,5 +107,5 @@
     </footer>
     <script src="assets/js/script.js?v=2"></script>
 </body>
-</html>
 
+</html>
